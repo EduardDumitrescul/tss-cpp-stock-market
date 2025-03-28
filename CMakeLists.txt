@@ -3,22 +3,34 @@ project(tss_cpp_stock_market)
 
 set(CMAKE_CXX_STANDARD 20)
 
-add_executable(tss_cpp_stock_market main.cpp
-        src/trader/Trader.h
-        src/portfolio/Portfolio.h
-        src/trader/Trader.cpp
-        src/stock/Stock.cpp
-        src/stock/Stock.h
-        src/stockMarket/StockMarket.cpp
-        src/stockMarket/StockMarket.h
-        src/orderBook/OrderBook.cpp
-        src/orderBook/OrderBook.h
-        src/order/Order.cpp
-        src/order/Order.h
-        src/types/Name.h
-        src/types/Symbol.h
-        src/types/Quantity.h
-        src/types/Price.h
-        src/types/Funds.h
-        src/app/App.cpp
-        src/app/App.h)
+# Automatically gather source files (all .cpp files under src/)
+file(GLOB_RECURSE SOURCE_FILES
+        src/*.cpp
+)
+
+# Automatically gather header files (all .h files under src/)
+file(GLOB_RECURSE HEADER_FILES
+        src/*.h
+)
+
+include(FetchContent)
+FetchContent_Declare(
+        googletest
+        URL https://github.com/google/googletest/archive/03597a01ee50ed33e9dfd640b249b4be3799d395.zip
+)
+FetchContent_MakeAvailable(googletest)
+
+enable_testing()
+
+add_executable(
+        hello_test
+        hello_test.cc
+        src/types/symbol/symbol_test.cc
+)
+target_link_libraries(
+        hello_test
+        GTest::gtest_main
+)
+
+include(GoogleTest)
+gtest_discover_tests(hello_test)

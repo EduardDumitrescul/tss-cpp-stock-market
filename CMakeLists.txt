@@ -27,6 +27,7 @@ add_executable(
         hello_test.cc
         src/types/symbol/symbol_test.cc
         src/types/quantity/quantity_test.cc
+        src/types/funds/funds_test.cc
 )
 target_link_libraries(
         hello_test

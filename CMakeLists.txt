@@ -26,6 +26,7 @@ add_executable(
         hello_test
         hello_test.cc
         src/types/symbol/symbol_test.cc
+        src/types/quantity/quantity_test.cc
 )
 target_link_libraries(
         hello_test

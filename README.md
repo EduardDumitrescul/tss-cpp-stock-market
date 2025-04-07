@@ -1,12 +1,26 @@
 # C++ Stock Market
 > Proiect Testarea Sistemelor Software
 
+## Echipă
+**Cod Echipă**: A18
+
+**Temă**: T13 (Stock Market in C++)
+
+**Componență echipă**: 
+- Codarcea Alexandru-Christian
+- Dumitrescul Eduard-Valentin
+- Gavrilă Florin-Alexandru
+
 ## Setup software
 - [C++ 20](https://en.cppreference.com/w/cpp/20)
 - [CMake >= 3.30](https://cmake.org/)
 - IDE: [CLion](https://www.jetbrains.com/clion/)
 - testing framework: [googletest 1.14.0](http://google.github.io/googletest/)
 - OS: Windows 11, Ubuntu 24.04, EndeavoursOS 6.13
+
+## Introducere
+**Descrierea proiectului**: 
+Proiectul este despre dezvoltarea unei aplicații simple de trading. Funcționalitățile principale sunt cumpărarea si vânzarea de acțiuni, diferitele posibilități de cumpărare (explicate mai jos) market order, limit order, stop order, și urmărirea portofoliului tău. Ne bazăm pe construirea unei aplicații simple prin care să poată fi mai ușor invățate diferitele abordări tactice din lumea investițiilor.
 
 ## Terminologie:
 - **stock** = o acțiune reprezintă o unitate de proprietate într-o companie, de obicei sub formă de acțiuni. Acesta oferă acționarului un drept asupra unei părți din activele și profiturile companiei.
@@ -19,6 +33,8 @@
 - **https://www.xtb.com/ro**
 - **https://www.interactivebrokers.com/**
 - **https://robinhood.com/eu/en/about/crypto/**
+
+Avantajele platformelor existente sunt că pot fi folosite în mod oficial pentru cumpărare și vânzare, dar sunt încărcate de funcționalități. Astfel, noi venim cu o aplicație simplă, care păstrează functionalitățile de bază și care poate fi folosită pentru învățare.
 
 ## Business Logic
 

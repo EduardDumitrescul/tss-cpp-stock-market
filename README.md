@@ -57,3 +57,8 @@ Un **ordin** poate fi de mai multe tipuri:
 ### Actualizarea continuă a cărții de ordine
 
 Cartea de ordine se actualizează în timp real. Când un **ordin** este executat, acesta dispare din listă. Dacă prețul unui activ se modifică, **cartea de ordine** va reflecta aceste schimbări. Traderii vor putea vizualiza mereu ofertele disponibile de cumpărare și vânzare.
+
+## Resurse de învățare
+- https://testsigma.com/blog/test-cases-for-trading-application/
+- https://codoid.com/automation-testing/comprehensive-strategies-to-test-trading-software/
+- https://www.cigniti.com/blog/testing-trading-systems-the-right-way/

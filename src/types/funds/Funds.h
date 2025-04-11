@@ -5,6 +5,8 @@
 #ifndef FUNDS_H
 #define FUNDS_H
 
+#include <stdexcept>
+
 class Funds {
     long long amount;
 

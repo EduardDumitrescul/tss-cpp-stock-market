@@ -5,6 +5,7 @@
 #ifndef SYMBOL_H
 #define SYMBOL_H
 #include <string>
+#include <stdexcept>
 
 class Symbol {
     const std::string symbol;
@@ -37,6 +38,28 @@ public:
         assertLengthAtMost5(name);
         assertUppercaseAlpha(name);
     }
+
+    Symbol(const Symbol&) = default;
+    Symbol& operator=(const Symbol&) = default;
+
+    bool operator==(const Symbol& other) const {
+        return symbol == other.symbol;
+    }
+
+    friend struct std::hash<Symbol>;
+
 };
+
+namespace std {
+    template<>
+    struct hash<Symbol> {
+            size_t operator()(const Symbol& s) const noexcept {
+                // Implement your hash function here
+                // Example:
+                return hash<string>()(s.symbol);
+            }
+        };
+}
+
 
 #endif //SYMBOL_H

@@ -7,12 +7,13 @@
 #include <memory>
 
 #include "../stockMarket/StockMarket.h"
+#include "../trader/manager/TraderManager.h"
 
 
 class App {
     std::shared_ptr<const StockMarket> stockMarket;
-    std::vector<const std::shared_ptr<const Portfolio>> portfolios;
-    std::vector<const std::shared_ptr<const Trader>> traders;
+
+    std::unique_ptr<TraderManager> traderManager;
 
 public:
 

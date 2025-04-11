@@ -5,6 +5,8 @@
 #ifndef QUANTITY_H
 #define QUANTITY_H
 
+#include <stdexcept>
+
 class Quantity {
     const long long quantity;
 
@@ -26,6 +28,9 @@ public:
         assertNotNegative();
         assertAtMostABillion();
     }
+
+    Quantity(const Quantity&) = default;
+    Quantity& operator=(const Quantity&) = default;
 };
 
 #endif //QUANTITY_H

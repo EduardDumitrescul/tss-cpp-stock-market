@@ -8,6 +8,9 @@
 
 class Name {
     const std::string name;
+
+public:
+    explicit Name(const std::string &name): name(name) {}
 };
 
 #endif //NAME_H

@@ -3,14 +3,23 @@ project(tss_cpp_stock_market)
 
 set(CMAKE_CXX_STANDARD 20)
 
-# Automatically gather source files (all .cpp files under src/)
-file(GLOB_RECURSE SOURCE_FILES
-        src/*.cpp
+set(IMPL_SOURCES
+        src/trader/Trader.cpp
+        src/trader/manager/TraderManager.cpp
+        src/types/symbol/Symbol.h
+        src/types/quantity/Quantity.h
+        src/types/funds/Funds.h
+        src/types/name/Name.h
+        src/portfolio/Portfolio.cpp
 )
 
-# Automatically gather header files (all .h files under src/)
-file(GLOB_RECURSE HEADER_FILES
-        src/*.h
+# Test files
+set(TEST_SOURCES
+        hello_test.cc
+        src/types/symbol/symbol_test.cc
+        src/types/quantity/quantity_test.cc
+        src/types/funds/funds_test.cc
+        src/trader/manager/trader_manager_test.cc
 )
 
 include(FetchContent)
@@ -20,19 +29,18 @@ FetchContent_Declare(
 )
 FetchContent_MakeAvailable(googletest)
 
+add_library(tss_impl ${IMPL_SOURCES})
+
+
 enable_testing()
 
-add_executable(
-        hello_test
-        hello_test.cc
-        src/types/symbol/symbol_test.cc
-        src/types/quantity/quantity_test.cc
-        src/types/funds/funds_test.cc
+add_executable(hello_test ${TEST_SOURCES})
+target_link_libraries(hello_test
+        PRIVATE
+        tss_impl
+        gtest_main
 )
-target_link_libraries(
-        hello_test
-        GTest::gtest_main
-)
+
 
 include(GoogleTest)
 gtest_discover_tests(hello_test)

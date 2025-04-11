@@ -6,13 +6,13 @@
 #define STOCK_H
 #include <string>
 
-#include "../types/Name.h"
-#include "../types/Symbol.h"
+#include "../types/name/Name.h"
+#include "../types/symbol/Symbol.h"
 
 
 class Stock {
-    const Name name;
-    const Symbol symbol;
+    Name name;
+    Symbol symbol;
 };
 
 

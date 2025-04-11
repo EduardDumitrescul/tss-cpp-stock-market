@@ -7,8 +7,8 @@
 #include <memory>
 
 #include "../stock/Stock.h"
-#include "../types/Price.h"
-#include "../types/Quantity.h"
+#include "../types/price/Price.h"
+#include "../types/quantity/Quantity.h"
 
 
 class Order {

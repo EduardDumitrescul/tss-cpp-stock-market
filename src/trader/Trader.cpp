@@ -11,6 +11,10 @@ portfolio(std::make_shared<Portfolio>()) {
 
 }
 
+Name Trader::getName() const {
+    return name;
+}
+
 Trader::Trader(const Trader *other):
 name(other->name),
 portfolio(std::make_shared<Portfolio>(*other->portfolio)),

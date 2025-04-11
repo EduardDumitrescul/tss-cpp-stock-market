@@ -5,8 +5,21 @@
 #include "TraderManager.h"
 
 void TraderManager::insert(const std::shared_ptr<const Trader> trader) {
+    if (traderWithNameExists(trader->getName())) {
+        throw std::invalid_argument("Trader with name " + trader->getName().toString() + " already exists");
+    }
     traders.push_back(std::make_shared<Trader>(*trader));
 }
+
+bool TraderManager::traderWithNameExists(const Name& name) const {
+    for (const auto& trader: traders) {
+        if (trader->getName() == name) {
+            return true;
+        }
+    }
+    return false;
+}
+
 
 std::vector<std::shared_ptr<const Trader>> TraderManager::getTraders() const {
     std::vector<std::shared_ptr<const Trader>> result;

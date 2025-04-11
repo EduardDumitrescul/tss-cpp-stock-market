@@ -11,6 +11,14 @@ class Name {
 
 public:
     explicit Name(const std::string &name): name(name) {}
+
+    bool operator==(const Name& other) const {
+        return name == other.name;
+    }
+
+    std::string toString() const {
+        return name;
+    }
 };
 
 #endif //NAME_H

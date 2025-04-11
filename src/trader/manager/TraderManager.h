@@ -14,6 +14,8 @@
 class TraderManager final : public ITraderManager {
     std::vector<std::shared_ptr<Trader>> traders;
 
+    bool traderWithNameExists(const Name& name) const;
+
 public:
     void insert(std::shared_ptr<const Trader> trader) override;
 

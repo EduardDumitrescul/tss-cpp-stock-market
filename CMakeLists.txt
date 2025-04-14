@@ -21,6 +21,7 @@ set(TEST_SOURCES
         src/types/funds/funds_test.cc
         src/trader/manager/trader_manager_test.cc
         src/orderBook/order_book_test.cc
+        src/types/price/price_test.cc
 )
 
 # GoogleTest

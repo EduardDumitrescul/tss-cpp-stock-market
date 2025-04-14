@@ -8,7 +8,7 @@ protected:
     Stock appleStock = Stock(Name("Apple"), Symbol("APPL"));
     Stock nvidiaStock = Stock(Name("Nvidia"), Symbol("NVDA"));
     OrderBook orderBook = OrderBook(appleStock);
-    std::shared_ptr<Trader> trader = std::make_shared<Trader>(Name("Edi"), Funds(1000));
+    std::shared_ptr<Trader> trader = std::make_shared<Trader>(Name("Edi"));
 
 };
 

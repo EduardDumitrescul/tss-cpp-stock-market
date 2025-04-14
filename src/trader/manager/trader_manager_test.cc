@@ -5,8 +5,8 @@
 class TraderManagerTest: public testing::Test {
 protected:
     const std::shared_ptr<ITraderManager> traderManager = std::make_shared<TraderManager>();
-    const std::shared_ptr<const Trader> trader1 = std::make_shared<Trader>(Name("Edi"), Funds(1000));
-    const std::shared_ptr<const Trader> trader2 = std::make_shared<Trader>(Name("Alex"), Funds(1000));
+    const std::shared_ptr<const Trader> trader1 = std::make_shared<Trader>(Name("Edi"));
+    const std::shared_ptr<const Trader> trader2 = std::make_shared<Trader>(Name("Alex"));
 
     TraderManagerTest() = default;
 };

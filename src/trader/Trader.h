@@ -13,9 +13,8 @@
 class Trader {
     const Name name;
     const std::shared_ptr<Portfolio> portfolio;
-    const Funds funds;
 public:
-    Trader(const Name &name, const Funds& funds);
+    Trader(const Name &name);
 
     Name getName() const;
 

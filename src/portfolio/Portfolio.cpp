@@ -4,10 +4,11 @@
 
 #include "Portfolio.h"
 
-Portfolio::Portfolio(): stocks() {
+Portfolio::Portfolio(): stocks(), funds(0) {
 }
 
 Portfolio::Portfolio(const Portfolio *other):
-stocks(other->stocks)
+stocks(other->stocks),
+funds(other->funds)
 {
 }

@@ -8,7 +8,7 @@
 #include <stdexcept>
 
 class Symbol {
-    const std::string symbol;
+    std::string symbol;
 
     static void assertLengthAtLeast2(const std::string& value) {
         if (value.size() < 2) {
@@ -40,10 +40,17 @@ public:
     }
 
     Symbol(const Symbol&) = default;
-    Symbol& operator=(const Symbol&) = default;
 
     bool operator==(const Symbol& other) const {
         return symbol == other.symbol;
+    }
+
+    Symbol& operator=(const Symbol& other) {
+        if (*this == other) {
+            return *this;
+        }
+        symbol = other.symbol;
+        return *this;
     }
 
     friend struct std::hash<Symbol>;

@@ -14,10 +14,10 @@
 class Trader;
 
 class Order {
-    const std::shared_ptr<const Trader> trader;
-    const Stock stock;
-    const Quantity quantity;
-    const Price price;
+    std::shared_ptr<const Trader> trader;
+    Stock stock;
+    Quantity quantity;
+    Price price;
 
 public:
     Order(
@@ -28,8 +28,16 @@ public:
     );
 
     explicit Order(const Order* other);
+    Order& operator=(const Order& other);
+    bool operator==(const Order& other) const;
 
     Stock getStock() const;
+
+    Price getPrice() const;
+
+    Quantity getQuantity() const;
+
+    void setQuantity(Quantity q);
 };
 
 

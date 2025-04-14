@@ -23,6 +23,37 @@ stock(other->stock),
 quantity(other->quantity),
 price(other->price) {}
 
+Order & Order::operator=(const Order &other) {
+    if (this == &other) {
+        return *this;
+    }
+    trader = other.trader;
+    stock = other.stock;
+    quantity = other.quantity;
+    price = other.price;
+    return *this;
+}
+
+bool Order::operator==(const Order &other) const {
+    return trader == other.trader
+    && stock == other.stock
+    && quantity == other.quantity
+    && price == other.price;
+}
+
+
 Stock Order::getStock() const {
     return stock;
+}
+
+Price Order::getPrice() const {
+    return price;
+}
+
+Quantity Order::getQuantity() const {
+    return quantity;
+}
+
+void Order::setQuantity(Quantity q) {
+    quantity = q;
 }

@@ -10,6 +10,8 @@ class Price {
 
 public:
     Price(long long price):price(price) {}
+
+    auto operator<=>(const Price & price) const = default;
 };
 
 #endif //PRICE_H

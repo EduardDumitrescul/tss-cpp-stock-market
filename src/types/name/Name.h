@@ -7,13 +7,21 @@
 #include <string>
 
 class Name {
-    const std::string name;
+    std::string name;
 
 public:
     explicit Name(const std::string &name): name(name) {}
 
     bool operator==(const Name& other) const {
         return name == other.name;
+    }
+
+    Name& operator=(const Name& other) {
+        if (this == &other) {
+            return *this;
+        }
+        name = other.name;
+        return *this;
     }
 
     std::string toString() const {

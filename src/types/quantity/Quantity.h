@@ -8,7 +8,7 @@
 #include <stdexcept>
 
 class Quantity {
-    const long long quantity;
+    long long quantity;
 
     void assertNotNegative() const {
         if (quantity < 0) {
@@ -30,7 +30,18 @@ public:
     }
 
     Quantity(const Quantity&) = default;
-    Quantity& operator=(const Quantity&) = default;
+
+    bool operator==(int i) const {
+        return  quantity == i;
+    }
+
+    auto operator<=>(const Quantity & quantity) const = default;
+
+    Quantity operator-(const Quantity & quantity) const {
+        return Quantity(this->quantity - quantity.quantity);
+    }
+
+    bool operator==(const Quantity & quantity) const = default;
 };
 
 #endif //QUANTITY_H

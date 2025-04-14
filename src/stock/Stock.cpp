@@ -12,3 +12,12 @@ name(name), symbol(symbol){
 bool Stock::operator==(const Stock &stock) const {
     return name == stock.name && symbol == stock.symbol;
 }
+
+Stock & Stock::operator=(const Stock& other) {
+    if (this == &other) {
+        return *this;
+    }
+    name = other.name;
+    symbol = other.symbol;
+    return *this;
+}

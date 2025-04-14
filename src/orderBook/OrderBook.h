@@ -4,7 +4,7 @@
 
 #ifndef ORDERBOOK_H
 #define ORDERBOOK_H
-#include <memory>
+#include <queue>
 #include <vector>
 
 #include "../order/Order.h"
@@ -12,17 +12,43 @@
 
 
 class OrderBook {
+    struct BuyOrderComparator {
+        bool operator()(const Order& lhs, const Order& rhs) const {
+            return lhs.getPrice() < rhs.getPrice(); // higher price = higher priority
+        }
+    };
+
+    struct SellOrderComparator {
+        bool operator()(const Order& lhs, const Order& rhs) const {
+            return lhs.getPrice() > rhs.getPrice(); // lower price = higher priority
+        }
+    };
+
     Stock stock;
-    std::vector <Order> sellOrders;
-    std::vector <Order> buyOrders;
+    std::priority_queue <Order, std::vector<Order>, SellOrderComparator> sellOrders;
+    std::priority_queue <Order, std::vector<Order>, BuyOrderComparator> buyOrders;
+
 
     void assertOrderStockSameAsOrderBookStock(Order order) const;
+
+    bool sellOrdersExist() const;
+    bool buyOrdersExist() const;
+
+    bool orderMatchExists() const;
+
+    void removeBestSellOrder();
+    void removeBestBuyOrder();
+
+    void matchOrders();
 
 public:
     explicit OrderBook(Stock stock);
 
     void addBuyOrder(Order order);
     void addSellOrder(Order order);
+
+    Order bestSellOrder() const;
+    Order bestBuyOrder() const;
 
     std::vector <Order> getBuyOrders() const;
     std::vector <Order> getSellOrders() const;

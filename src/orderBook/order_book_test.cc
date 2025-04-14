@@ -9,7 +9,7 @@ protected:
     Stock nvidiaStock = Stock(Name("Nvidia"), Symbol("NVDA"));
     OrderBook orderBook = OrderBook(appleStock);
     std::shared_ptr<Trader> trader = std::make_shared<Trader>(Name("Edi"));
-
+    std::shared_ptr<Trader> trader2 = std::make_shared<Trader>(Name("Alex"));
 };
 
 TEST_F(OrderBookTest, AddBuyOrder) {
@@ -23,6 +23,14 @@ TEST_F(OrderBookTest, AddBuyOrder) {
     EXPECT_EQ(buyOrders.size(), 2);
 }
 
+TEST_F(OrderBookTest, AddBuyOrderMantainOrder) {
+    orderBook.addBuyOrder(Order(trader, appleStock, Quantity(10), Price(100)));
+    orderBook.addBuyOrder(Order(trader, appleStock, Quantity(5), Price(120)));
+
+    auto buyOrder = orderBook.bestBuyOrder();
+    EXPECT_EQ(buyOrder, Order(trader, appleStock, Quantity(5), Price(120)));
+}
+
 TEST_F(OrderBookTest, AddSellOrder) {
     auto sellOrders = orderBook.getSellOrders();
     EXPECT_EQ(sellOrders.size(), 0);
@@ -32,6 +40,14 @@ TEST_F(OrderBookTest, AddSellOrder) {
 
     sellOrders = orderBook.getSellOrders();
     EXPECT_EQ(sellOrders.size(), 2);
+}
+
+TEST_F(OrderBookTest, AddSellOrderMantainOrder) {
+    orderBook.addSellOrder(Order(trader, appleStock, Quantity(5), Price(120)));
+    orderBook.addSellOrder(Order(trader, appleStock, Quantity(10), Price(100)));
+
+    auto sellOrder = orderBook.bestSellOrder();
+    EXPECT_EQ(sellOrder, Order(trader, appleStock, Quantity(10), Price(100)));
 }
 
 TEST_F(OrderBookTest, AddBuyOrderDifferentStock) {
@@ -48,4 +64,20 @@ TEST_F(OrderBookTest, AddSellOrderDifferentStock) {
     },
     std::exception
     );
+}
+
+TEST_F(OrderBookTest, FullOrderMatching) {
+    orderBook.addBuyOrder(Order(trader, appleStock, Quantity(10), Price(100)));
+    orderBook.addSellOrder(Order(trader2, appleStock, Quantity(10), Price(80)));
+
+    EXPECT_TRUE(orderBook.getSellOrders().empty());
+    EXPECT_TRUE(orderBook.getBuyOrders().empty());
+}
+
+TEST_F(OrderBookTest, PartialOrderMatching) {
+    orderBook.addBuyOrder(Order(trader, appleStock, Quantity(10), Price(100)));
+    orderBook.addSellOrder(Order(trader2, appleStock, Quantity(3), Price(80)));
+
+    EXPECT_TRUE(orderBook.getSellOrders().empty());
+    EXPECT_TRUE(orderBook.bestBuyOrder().getQuantity() == 7);
 }

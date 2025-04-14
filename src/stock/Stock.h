@@ -19,6 +19,7 @@ public:
     Stock(Name name, Symbol symbol);
 
     bool operator==(const Stock& stock) const;
+    Stock& operator=(const Stock& other);
 };
 
 

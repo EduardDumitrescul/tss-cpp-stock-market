@@ -28,6 +28,8 @@ public:
     );
 
     explicit Order(const Order* other);
+
+    Stock getStock() const;
 };
 
 

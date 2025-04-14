@@ -33,3 +33,19 @@ TEST_F(OrderBookTest, AddSellOrder) {
     sellOrders = orderBook->getSellOrders();
     EXPECT_EQ(sellOrders.size(), 2);
 }
+
+TEST_F(OrderBookTest, AddBuyOrderDifferentStock) {
+    EXPECT_THROW({
+        orderBook->addBuyOrder(Order(trader, nvidiaStock, Quantity(5), Price(120)));
+    },
+    std::exception
+    );
+}
+
+TEST_F(OrderBookTest, AddSellOrderDifferentStock) {
+    EXPECT_THROW({
+        orderBook->addSellOrder(Order(trader, nvidiaStock, Quantity(5), Price(120)));
+    },
+    std::exception
+    );
+}

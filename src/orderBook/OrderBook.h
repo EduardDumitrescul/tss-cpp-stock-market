@@ -15,6 +15,9 @@ class OrderBook {
     const std::shared_ptr<const Stock> stock;
     std::vector <Order> sellOrders;
     std::vector <Order> buyOrders;
+
+    void assertOrderStockSameAsOrderBookStock(Order order) const;
+
 public:
     explicit OrderBook(std::shared_ptr<const Stock> stock);
 

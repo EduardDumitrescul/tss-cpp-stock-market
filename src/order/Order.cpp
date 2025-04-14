@@ -22,3 +22,7 @@ trader(other->trader),
 stock(other->stock),
 quantity(other->quantity),
 price(other->price) {}
+
+Stock Order::getStock() const {
+    return *stock;
+}

@@ -15,14 +15,14 @@ class Trader;
 
 class Order {
     const std::shared_ptr<const Trader> trader;
-    const std::shared_ptr<const Stock> stock;
+    const Stock stock;
     const Quantity quantity;
     const Price price;
 
 public:
     Order(
         std::shared_ptr<const Trader> trader,
-        std::shared_ptr<const Stock> stock,
+        Stock stock,
         Quantity quantity,
         Price price
     );

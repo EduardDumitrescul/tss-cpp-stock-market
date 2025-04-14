@@ -9,6 +9,6 @@ name(name), symbol(symbol){
 
 }
 
-bool Stock::operator==(const std::shared_ptr<const Stock> &stock) const {
-    return name == stock->name && symbol == stock->symbol;
+bool Stock::operator==(const Stock &stock) const {
+    return name == stock.name && symbol == stock.symbol;
 }

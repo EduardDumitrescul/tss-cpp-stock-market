@@ -18,7 +18,7 @@ class Stock {
 public:
     Stock(Name name, Symbol symbol);
 
-    bool operator==(const std::shared_ptr<const Stock> & stock) const;
+    bool operator==(const Stock& stock) const;
 };
 
 

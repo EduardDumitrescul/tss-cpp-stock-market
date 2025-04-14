@@ -6,7 +6,7 @@
 
 Order::Order(
     std::shared_ptr<const Trader> trader,
-    std::shared_ptr<const Stock> stock,
+    Stock stock,
     Quantity quantity,
     Price price
 ):
@@ -24,5 +24,5 @@ quantity(other->quantity),
 price(other->price) {}
 
 Stock Order::getStock() const {
-    return *stock;
+    return stock;
 }

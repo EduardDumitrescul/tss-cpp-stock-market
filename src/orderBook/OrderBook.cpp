@@ -10,7 +10,7 @@ void OrderBook::assertOrderStockSameAsOrderBookStock(Order order) const {
     }
 }
 
-OrderBook::OrderBook(std::shared_ptr<const Stock> stock):
+OrderBook::OrderBook(Stock stock):
 stock(stock){
 
 }

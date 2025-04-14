@@ -5,38 +5,38 @@
 
 class OrderBookTest: public testing::Test {
 protected:
-    std::shared_ptr<Stock> appleStock = std::make_shared<Stock>(Name("Apple"), Symbol("APPL"));
-    std::shared_ptr<Stock> nvidiaStock = std::make_shared<Stock>(Name("Nvidia"), Symbol("NVDA"));
-    std::shared_ptr<OrderBook> orderBook = std::make_shared<OrderBook>(appleStock);
+    Stock appleStock = Stock(Name("Apple"), Symbol("APPL"));
+    Stock nvidiaStock = Stock(Name("Nvidia"), Symbol("NVDA"));
+    OrderBook orderBook = OrderBook(appleStock);
     std::shared_ptr<Trader> trader = std::make_shared<Trader>(Name("Edi"), Funds(1000));
 
 };
 
 TEST_F(OrderBookTest, AddBuyOrder) {
-    auto buyOrders = orderBook->getBuyOrders();
+    auto buyOrders = orderBook.getBuyOrders();
     EXPECT_EQ(buyOrders.size(), 0);
 
-    orderBook->addBuyOrder(Order(trader, appleStock, Quantity(10), Price(100)));
-    orderBook->addBuyOrder(Order(trader, appleStock, Quantity(5), Price(120)));
+    orderBook.addBuyOrder(Order(trader, appleStock, Quantity(10), Price(100)));
+    orderBook.addBuyOrder(Order(trader, appleStock, Quantity(5), Price(120)));
 
-    buyOrders = orderBook->getBuyOrders();
+    buyOrders = orderBook.getBuyOrders();
     EXPECT_EQ(buyOrders.size(), 2);
 }
 
 TEST_F(OrderBookTest, AddSellOrder) {
-    auto sellOrders = orderBook->getSellOrders();
+    auto sellOrders = orderBook.getSellOrders();
     EXPECT_EQ(sellOrders.size(), 0);
 
-    orderBook->addSellOrder(Order(trader, appleStock, Quantity(10), Price(100)));
-    orderBook->addSellOrder(Order(trader, appleStock, Quantity(5), Price(120)));
+    orderBook.addSellOrder(Order(trader, appleStock, Quantity(10), Price(100)));
+    orderBook.addSellOrder(Order(trader, appleStock, Quantity(5), Price(120)));
 
-    sellOrders = orderBook->getSellOrders();
+    sellOrders = orderBook.getSellOrders();
     EXPECT_EQ(sellOrders.size(), 2);
 }
 
 TEST_F(OrderBookTest, AddBuyOrderDifferentStock) {
     EXPECT_THROW({
-        orderBook->addBuyOrder(Order(trader, nvidiaStock, Quantity(5), Price(120)));
+        orderBook.addBuyOrder(Order(trader, nvidiaStock, Quantity(5), Price(120)));
     },
     std::exception
     );
@@ -44,7 +44,7 @@ TEST_F(OrderBookTest, AddBuyOrderDifferentStock) {
 
 TEST_F(OrderBookTest, AddSellOrderDifferentStock) {
     EXPECT_THROW({
-        orderBook->addSellOrder(Order(trader, nvidiaStock, Quantity(5), Price(120)));
+        orderBook.addSellOrder(Order(trader, nvidiaStock, Quantity(5), Price(120)));
     },
     std::exception
     );

@@ -13,6 +13,9 @@
 class Stock {
     Name name;
     Symbol symbol;
+
+public:
+    Stock(Name name, Symbol symbol);
 };
 
 

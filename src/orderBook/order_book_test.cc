@@ -1,0 +1,35 @@
+#include <gtest/gtest.h>
+
+#include "OrderBook.h"
+#include "../trader/Trader.h"
+
+class OrderBookTest: public testing::Test {
+protected:
+    std::shared_ptr<Stock> appleStock = std::make_shared<Stock>(Name("Apple"), Symbol("APPL"));
+    std::shared_ptr<Stock> nvidiaStock = std::make_shared<Stock>(Name("Nvidia"), Symbol("NVDA"));
+    std::shared_ptr<OrderBook> orderBook = std::make_shared<OrderBook>(appleStock);
+    std::shared_ptr<Trader> trader = std::make_shared<Trader>(Name("Edi"), Funds(1000));
+
+};
+
+TEST_F(OrderBookTest, AddBuyOrder) {
+    auto buyOrders = orderBook->getBuyOrders();
+    EXPECT_EQ(buyOrders.size(), 0);
+
+    orderBook->addBuyOrder(Order(trader, appleStock, Quantity(10), Price(100)));
+    orderBook->addBuyOrder(Order(trader, appleStock, Quantity(5), Price(120)));
+
+    buyOrders = orderBook->getBuyOrders();
+    EXPECT_EQ(buyOrders.size(), 2);
+}
+
+TEST_F(OrderBookTest, AddSellOrder) {
+    auto sellOrders = orderBook->getSellOrders();
+    EXPECT_EQ(sellOrders.size(), 0);
+
+    orderBook->addSellOrder(Order(trader, appleStock, Quantity(10), Price(100)));
+    orderBook->addSellOrder(Order(trader, appleStock, Quantity(5), Price(120)));
+
+    sellOrders = orderBook->getSellOrders();
+    EXPECT_EQ(sellOrders.size(), 2);
+}

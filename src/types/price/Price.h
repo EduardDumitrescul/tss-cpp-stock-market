@@ -7,6 +7,9 @@
 
 class Price {
     long long price;
+
+public:
+    Price(long long price):price(price) {}
 };
 
 #endif //PRICE_H

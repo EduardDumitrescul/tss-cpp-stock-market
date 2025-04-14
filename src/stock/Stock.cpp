@@ -3,3 +3,8 @@
 //
 
 #include "Stock.h"
+
+Stock::Stock(Name name, Symbol symbol):
+name(name), symbol(symbol){
+
+}

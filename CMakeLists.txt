@@ -3,25 +3,27 @@ project(tss_cpp_stock_market)
 
 set(CMAKE_CXX_STANDARD 20)
 
+# Implementation sources
 set(IMPL_SOURCES
         src/trader/Trader.cpp
         src/trader/manager/TraderManager.cpp
-        src/types/symbol/Symbol.h
-        src/types/quantity/Quantity.h
-        src/types/funds/Funds.h
-        src/types/name/Name.h
         src/portfolio/Portfolio.cpp
+        src/order/Order.cpp
+        src/stock/Stock.cpp
+        src/orderBook/OrderBook.cpp
 )
 
-# Test files
+# Test sources
 set(TEST_SOURCES
         hello_test.cc
         src/types/symbol/symbol_test.cc
         src/types/quantity/quantity_test.cc
         src/types/funds/funds_test.cc
         src/trader/manager/trader_manager_test.cc
+        src/orderBook/order_book_test.cc
 )
 
+# GoogleTest
 include(FetchContent)
 FetchContent_Declare(
         googletest
@@ -29,18 +31,20 @@ FetchContent_Declare(
 )
 FetchContent_MakeAvailable(googletest)
 
+# Implementation library
 add_library(tss_impl ${IMPL_SOURCES})
 
+add_executable(tss_main main.cpp)
+target_link_libraries(tss_main PRIVATE tss_impl)
 
+
+# Enable tests
 enable_testing()
 
+# Test executable
 add_executable(hello_test ${TEST_SOURCES})
-target_link_libraries(hello_test
-        PRIVATE
-        tss_impl
-        gtest_main
-)
+target_link_libraries(hello_test PRIVATE tss_impl gtest_main)
 
-
+# Register tests
 include(GoogleTest)
 gtest_discover_tests(hello_test)

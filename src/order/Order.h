@@ -7,11 +7,10 @@
 #include <memory>
 
 #include "../stock/Stock.h"
+#include "../trader/Trader.h"
 #include "../types/price/Price.h"
 #include "../types/quantity/Quantity.h"
 
-
-class Trader;
 
 class Order {
     std::shared_ptr<const Trader> trader;
@@ -38,6 +37,8 @@ public:
     Quantity getQuantity() const;
 
     void setQuantity(Quantity q);
+
+    std::shared_ptr<const Trader> getTrader() const;
 };
 
 

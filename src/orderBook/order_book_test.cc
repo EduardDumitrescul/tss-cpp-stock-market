@@ -1,6 +1,7 @@
 #include <gtest/gtest.h>
 
 #include "OrderBook.h"
+#include "../trade/Trade.h"
 #include "../trader/Trader.h"
 
 class OrderBookTest: public testing::Test {
@@ -80,4 +81,12 @@ TEST_F(OrderBookTest, PartialOrderMatching) {
 
     EXPECT_TRUE(orderBook.getSellOrders().empty());
     EXPECT_TRUE(orderBook.bestBuyOrder().getQuantity() == 7);
+}
+
+TEST_F(OrderBookTest, OrderMatchingReturnsTrades) {
+    auto trades1 = orderBook.addBuyOrder(Order(trader, appleStock, Quantity(10), Price(100)));
+    auto trades2 = orderBook.addSellOrder(Order(trader2, appleStock, Quantity(3), Price(80)));
+    EXPECT_TRUE(trades1.empty());
+    std::vector expectedTrades2 =  {Trade(trader, trader2, appleStock, Quantity(3), Price(80))};
+    EXPECT_EQ(trades2, expectedTrades2);
 }

@@ -57,3 +57,7 @@ Quantity Order::getQuantity() const {
 void Order::setQuantity(Quantity q) {
     quantity = q;
 }
+
+std::shared_ptr<const Trader> Order::getTrader() const {
+    return trader;
+}

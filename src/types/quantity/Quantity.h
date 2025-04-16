@@ -42,6 +42,10 @@ public:
     }
 
     bool operator==(const Quantity & quantity) const = default;
+
+    long long getValue() const {
+        return quantity;
+    }
 };
 
 #endif //QUANTITY_H

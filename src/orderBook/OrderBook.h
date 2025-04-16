@@ -9,7 +9,7 @@
 
 #include "../order/Order.h"
 #include "../stock/Stock.h"
-
+#include "../trade/Trade.h"
 
 class OrderBook {
     struct BuyOrderComparator {
@@ -39,13 +39,13 @@ class OrderBook {
     void removeBestSellOrder();
     void removeBestBuyOrder();
 
-    void matchOrders();
+    std::vector<Trade> matchOrders();
 
 public:
     explicit OrderBook(Stock stock);
 
-    void addBuyOrder(Order order);
-    void addSellOrder(Order order);
+    std::vector<Trade> addBuyOrder(Order order);
+    std::vector<Trade> addSellOrder(Order order);
 
     Order bestSellOrder() const;
     Order bestBuyOrder() const;

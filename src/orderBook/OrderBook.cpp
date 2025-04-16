@@ -19,10 +19,18 @@ bool OrderBook::buyOrdersExist() const {
 }
 
 Order OrderBook::bestSellOrder() const {
+    if (sellOrders.empty()) {
+        throw std::out_of_range("There is no buy order");
+    }
+
     return sellOrders.top();
 }
 
 Order OrderBook::bestBuyOrder() const {
+    if (buyOrders.empty()) {
+        throw std::out_of_range("There is no buy order");
+    }
+
     return buyOrders.top();
 }
 
@@ -59,13 +67,13 @@ std::vector<Trade> OrderBook::matchOrders() {
         long long remainingSellQuantity = sellOrder.getQuantity().getValue() - buyOrder.getQuantity().getValue();
         if (remainingSellQuantity > 0) {
             sellOrder.setQuantity(Quantity(remainingSellQuantity));
-            addSellOrder(sellOrder);
+            sellOrders.push(sellOrder);
         }
 
         long long remainingBuyQuantity = buyOrder.getQuantity().getValue() - sellOrder.getQuantity().getValue();
         if (remainingBuyQuantity > 0) {
             buyOrder.setQuantity(Quantity(remainingBuyQuantity));
-            addBuyOrder(buyOrder);
+           buyOrders.push(buyOrder);
         }
 
 

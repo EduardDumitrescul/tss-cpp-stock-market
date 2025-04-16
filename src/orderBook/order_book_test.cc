@@ -90,3 +90,36 @@ TEST_F(OrderBookTest, OrderMatchingReturnsTrades) {
     std::vector expectedTrades2 =  {Trade(trader, trader2, appleStock, Quantity(3), Price(80))};
     EXPECT_EQ(trades2, expectedTrades2);
 }
+
+TEST_F(OrderBookTest, FullMatchReturnsCorrectTrade) {
+    auto trades1 = orderBook.addBuyOrder(Order(trader, appleStock, Quantity(10), Price(100)));
+    auto trades2 = orderBook.addSellOrder(Order(trader2, appleStock, Quantity(10), Price(80)));
+
+    EXPECT_TRUE(trades1.empty());
+
+    std::vector<Trade> expectedTrades = {
+        Trade(trader, trader2, appleStock, Quantity(10), Price(80))
+    };
+    EXPECT_EQ(trades2, expectedTrades);
+}
+
+TEST_F(OrderBookTest, MultipleMatchesInOneGo) {
+    orderBook.addSellOrder(Order(trader2, appleStock, Quantity(5), Price(80)));
+    orderBook.addSellOrder(Order(trader2, appleStock, Quantity(5), Price(85)));
+
+    auto trades = orderBook.addBuyOrder(Order(trader, appleStock, Quantity(10), Price(100)));
+
+    std::vector<Trade> expectedTrades = {
+        Trade(trader, trader2, appleStock, Quantity(5), Price(80)),
+        Trade(trader, trader2, appleStock, Quantity(5), Price(85))
+    };
+    EXPECT_EQ(trades, expectedTrades);
+
+    EXPECT_TRUE(orderBook.getBuyOrders().empty());
+    EXPECT_TRUE(orderBook.getSellOrders().empty());
+}
+
+TEST_F(OrderBookTest, EmptyOrderBookThrowsOnBestOrderAccess) {
+    EXPECT_THROW(orderBook.bestBuyOrder(), std::exception);
+    EXPECT_THROW(orderBook.bestSellOrder(), std::exception);
+}

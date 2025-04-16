@@ -11,7 +11,7 @@ class Quantity {
     long long quantity;
 
     void assertNotNegative() const {
-        if (quantity < 0) {
+        if (quantity <= 0) {
             throw std::invalid_argument("Quantity can't be negative. Current value: " + std::to_string(quantity));
         }
     }

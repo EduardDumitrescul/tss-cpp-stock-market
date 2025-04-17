@@ -4,10 +4,13 @@
 
 #include "Portfolio.h"
 
-Portfolio::Portfolio(): stocks(), funds(0) {
+Portfolio::Portfolio(
+    std::shared_ptr<const Trader> owner
+):owner(owner), funds(0), stocks() {
 }
 
 Portfolio::Portfolio(const Portfolio *other):
+owner(other->owner),
 stocks(other->stocks),
 funds(other->funds)
 {
@@ -38,4 +41,8 @@ Funds Portfolio::getFunds() const {
 
 Quantity Portfolio::getStockQuantity(Stock stock) const {
     return stocks.at(stock.getSymbol());
+}
+
+std::shared_ptr<const Trader> Portfolio::getOwner() const {
+    return owner;
 }

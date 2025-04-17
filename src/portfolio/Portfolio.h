@@ -13,12 +13,15 @@
 #include "../types/symbol/Symbol.h"
 
 
+class Trader;
+
 class Portfolio {
+    std::shared_ptr<const Trader> owner;
     Funds funds;
     std::unordered_map<Symbol, Quantity> stocks;
 
 public:
-    Portfolio();
+    explicit Portfolio(std::shared_ptr <const Trader> owner);
 
     explicit Portfolio(const Portfolio* other);
 
@@ -31,6 +34,7 @@ public:
 
     Funds getFunds() const;
     Quantity getStockQuantity(Stock stock) const;
+    std::shared_ptr<const Trader> getOwner() const;
 };
 
 

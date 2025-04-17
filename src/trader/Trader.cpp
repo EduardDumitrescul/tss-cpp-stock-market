@@ -6,9 +6,8 @@
 
 Trader::Trader(const Name &name):
 id(TraderId::get()),
-name(name),
-portfolio(std::make_shared<Portfolio>()) {
-
+name(name) {
+    portfolio = std::make_shared<Portfolio>(std::make_shared<Trader>(*this));
 }
 
 Name Trader::getName() const {

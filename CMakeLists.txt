@@ -12,6 +12,7 @@ set(IMPL_SOURCES
         src/stock/Stock.cpp
         src/orderBook/OrderBook.cpp
         src/stockMarket/StockMarket.cpp
+        src/trader/traderId/TraderId.cpp
 )
 
 # Test sources
@@ -27,7 +28,6 @@ set(TEST_SOURCES
         src/portfolio/portfolio_test.cc
         src/trader/traderId/trader_id_test.cc
         src/stockMarket/stock_market_test.cc
-        src/trader/traderId/TraderId.cpp
 )
 
 # GoogleTest

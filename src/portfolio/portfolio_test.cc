@@ -2,10 +2,12 @@
 
 #include "Portfolio.h"
 #include "../stock/Stock.h"
+#include "../trader/Trader.h"
 
 class PortfolioTest: public testing::Test {
 protected:
-    Portfolio portfolio;
+    std::shared_ptr<Trader> trader = std::make_shared<Trader>(Name("Edi"));
+    Portfolio portfolio = Portfolio(trader);
     Funds funds100 = Funds(100);
     Funds funds50 = Funds(50);
 

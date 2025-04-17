@@ -4,6 +4,7 @@
 
 #ifndef TRADER_H
 #define TRADER_H
+
 #include <memory>
 
 #include "../portfolio/Portfolio.h"
@@ -12,11 +13,13 @@
 #include "traderId/TraderId.h"
 
 class Trader {
-    const TraderId id;
-    const Name name;
-    const std::shared_ptr<Portfolio> portfolio;
+    friend class StockMarket;
+
+    TraderId id;
+    Name name;
+    std::shared_ptr<Portfolio> portfolio;
 public:
-    Trader(const Name &name);
+    explicit Trader(const Name &name);
 
     explicit Trader(const Trader* other);
 

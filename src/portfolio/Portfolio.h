@@ -13,13 +13,17 @@
 
 
 class Portfolio {
-    const Funds funds;
+    Funds funds;
     std::unordered_map<Symbol, Quantity> stocks;
 
 public:
     Portfolio();
 
     explicit Portfolio(const Portfolio* other);
+
+    void addFunds(Funds funds);
+
+    Funds getFunds() const;
 };
 
 

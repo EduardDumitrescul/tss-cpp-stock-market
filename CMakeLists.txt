@@ -23,7 +23,7 @@ set(TEST_SOURCES
         src/trader/manager/trader_manager_test.cc
         src/orderBook/order_book_test.cc
         src/types/price/price_test.cc
-        src/trade/Trade.h
+        src/trader/trader_test.cc
 )
 
 # GoogleTest

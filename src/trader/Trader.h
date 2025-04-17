@@ -16,9 +16,12 @@ class Trader {
 public:
     Trader(const Name &name);
 
-    Name getName() const;
-
     explicit Trader(const Trader* other);
+
+    void depositFunds(Funds funds) const;
+
+    Name getName() const;
+    Funds getFunds() const;
 };
 
 

@@ -28,6 +28,13 @@ public:
         assertNotNegative();
         assertAtMostOneBillion();
     }
+
+    bool operator==(const Funds &) const = default;
+
+    Funds operator+(const Funds& funds) const {
+        Funds updatedFunds(amount + funds.amount);
+        return updatedFunds;
+    }
 };
 
 #endif //FUNDS_H

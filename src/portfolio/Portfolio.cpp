@@ -12,3 +12,11 @@ stocks(other->stocks),
 funds(other->funds)
 {
 }
+
+void Portfolio::addFunds(Funds funds) {
+    this->funds = this->funds + funds;
+}
+
+Funds Portfolio::getFunds() const {
+    return funds;
+}

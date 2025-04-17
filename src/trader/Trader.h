@@ -9,8 +9,10 @@
 #include "../portfolio/Portfolio.h"
 #include "../types/funds/Funds.h"
 #include "../types/name/Name.h"
+#include "traderId/TraderId.h"
 
 class Trader {
+    const TraderId id;
     const Name name;
     const std::shared_ptr<Portfolio> portfolio;
 public:
@@ -23,6 +25,7 @@ public:
 
     Name getName() const;
     Funds getFunds() const;
+    TraderId getId() const;
 };
 
 

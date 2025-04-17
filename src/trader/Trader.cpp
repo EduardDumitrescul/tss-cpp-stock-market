@@ -5,6 +5,7 @@
 #include "Trader.h"
 
 Trader::Trader(const Name &name):
+id(TraderId::get()),
 name(name),
 portfolio(std::make_shared<Portfolio>()) {
 
@@ -18,7 +19,12 @@ Funds Trader::getFunds() const {
     return portfolio->getFunds();
 }
 
+TraderId Trader::getId() const {
+    return id;
+}
+
 Trader::Trader(const Trader *other):
+id(TraderId::get()),
 name(other->name),
 portfolio(std::make_shared<Portfolio>(*other->portfolio))
 {

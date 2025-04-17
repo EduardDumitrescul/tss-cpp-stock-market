@@ -10,7 +10,7 @@
 
 class ITraderManager {
 public:
-    virtual void insert(std::shared_ptr<const Trader>) = 0;
+    virtual std::shared_ptr<const Trader> insert(Name name) = 0;
     virtual std::vector<std::shared_ptr<const Trader>> getTraders() const = 0;
     virtual ~ITraderManager() = default;
 };

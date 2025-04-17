@@ -9,15 +9,16 @@
 
 #include "ITraderManager.h"
 #include "../Trader.h"
+#include "../traderId/TraderId.h"
 
 
 class TraderManager final : public ITraderManager {
-    std::vector<std::shared_ptr<Trader>> traders;
+    std::unordered_map<TraderId, std::shared_ptr<Trader>> traders;
 
     bool traderWithNameExists(const Name& name) const;
 
 public:
-    void insert(std::shared_ptr<const Trader> trader) override;
+    std::shared_ptr<const Trader> insert(Name name) override;
 
     std::vector<std::shared_ptr<const Trader>> getTraders() const override;
 

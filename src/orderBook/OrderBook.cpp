@@ -118,3 +118,7 @@ std::vector<Order> OrderBook::getSellOrders() const {
     }
     return result;
 }
+
+Stock OrderBook::getStock() const {
+    return stock;
+}

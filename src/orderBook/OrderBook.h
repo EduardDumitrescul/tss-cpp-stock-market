@@ -52,6 +52,8 @@ public:
 
     std::vector <Order> getBuyOrders() const;
     std::vector <Order> getSellOrders() const;
+
+    Stock getStock() const;
 };
 
 

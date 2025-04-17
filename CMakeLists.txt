@@ -11,7 +11,7 @@ set(IMPL_SOURCES
         src/order/Order.cpp
         src/stock/Stock.cpp
         src/orderBook/OrderBook.cpp
-        src/trade/Trade.h
+        src/stockMarket/StockMarket.cpp
 )
 
 # Test sources
@@ -25,6 +25,8 @@ set(TEST_SOURCES
         src/types/price/price_test.cc
         src/trader/trader_test.cc
         src/portfolio/portfolio_test.cc
+        src/trader/traderId/trader_id_test.cc
+        src/stockMarket/stock_market_test.cc
 )
 
 # GoogleTest

@@ -25,6 +25,10 @@ portfolio(std::make_shared<Portfolio>(*other->portfolio))
 
 }
 
-void Trader::depositFunds(Funds funds) const {
+void Trader::depositFunds(Funds funds) {
     portfolio->addFunds(funds);
+}
+
+void Trader::withdrawFunds(Funds funds) {
+    portfolio->withdrawFunds(funds);
 }

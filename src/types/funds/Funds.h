@@ -35,6 +35,11 @@ public:
         Funds updatedFunds(amount + funds.amount);
         return updatedFunds;
     }
+
+    Funds operator-(const Funds & funds) const {
+        Funds updatedFunds(amount - funds.amount);
+        return updatedFunds;
+    }
 };
 
 #endif //FUNDS_H

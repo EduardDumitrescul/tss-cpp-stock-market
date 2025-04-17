@@ -22,6 +22,7 @@ public:
     explicit Portfolio(const Portfolio* other);
 
     void addFunds(Funds funds);
+    void withdrawFunds(Funds funds);
 
     Funds getFunds() const;
 };

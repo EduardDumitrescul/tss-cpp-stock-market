@@ -5,6 +5,8 @@
 class TraderTest: public testing::Test {
 protected:
     Trader trader = Trader(Name("edi"));
+    Funds funds100 = Funds(100);
+    Funds funds50 = Funds(50);
 };
 
 TEST_F(TraderTest, DepositFunds) {
@@ -13,8 +15,21 @@ TEST_F(TraderTest, DepositFunds) {
     EXPECT_EQ(initialFunds, expectedInitialFunds);
 
 
-    trader.depositFunds(Funds(100));
+    trader.depositFunds(funds100);
     Funds currentFunds = trader.getFunds();
-    Funds expectedCurrentFunds = Funds(100);
+    Funds expectedCurrentFunds = funds100;
     EXPECT_EQ(currentFunds, expectedCurrentFunds);
+}
+
+TEST_F(TraderTest, WithdrawFunds) {
+    trader.depositFunds(funds100);
+    trader.withdrawFunds(funds50);
+    Funds currentFunds = trader.getFunds();
+    Funds expectedFunds = funds50;
+    EXPECT_EQ(currentFunds, expectedFunds);
+}
+
+TEST_F(TraderTest, WithdrawFunds_ErrorOnOver) {
+    trader.depositFunds(funds50);
+    EXPECT_THROW(trader.withdrawFunds(funds100), std::exception);
 }

@@ -17,6 +17,10 @@ void Portfolio::addFunds(Funds funds) {
     this->funds = this->funds + funds;
 }
 
+void Portfolio::withdrawFunds(Funds funds) {
+    this->funds = this->funds - funds;
+}
+
 Funds Portfolio::getFunds() const {
     return funds;
 }

@@ -18,7 +18,8 @@ public:
 
     explicit Trader(const Trader* other);
 
-    void depositFunds(Funds funds) const;
+    void depositFunds(Funds funds);
+    void withdrawFunds(Funds funds);
 
     Name getName() const;
     Funds getFunds() const;

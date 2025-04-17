@@ -5,12 +5,12 @@
 TEST(QuantityTest, isNotNegative) {
     ASSERT_NO_THROW(
         {
-            Quantity q(1);
+            Quantity q(0);
         }
     );
     ASSERT_THROW(
         {
-            Quantity q(0);
+            Quantity q(-1);
         },
         std::invalid_argument
     );

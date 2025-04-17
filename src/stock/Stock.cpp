@@ -21,3 +21,7 @@ Stock & Stock::operator=(const Stock& other) {
     symbol = other.symbol;
     return *this;
 }
+
+Symbol Stock::getSymbol() const {
+    return symbol;
+}

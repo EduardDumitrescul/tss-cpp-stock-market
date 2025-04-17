@@ -11,7 +11,7 @@ class Quantity {
     long long quantity;
 
     void assertNotNegative() const {
-        if (quantity <= 0) {
+        if (quantity < 0) {
             throw std::invalid_argument("Quantity can't be negative. Current value: " + std::to_string(quantity));
         }
     }
@@ -23,7 +23,7 @@ class Quantity {
     }
 public:
     explicit Quantity(
-        const long long quantity
+        const long long quantity = 0
     ): quantity(quantity) {
         assertNotNegative();
         assertAtMostABillion();
@@ -39,6 +39,28 @@ public:
 
     Quantity operator-(const Quantity & quantity) const {
         return Quantity(this->quantity - quantity.quantity);
+    }
+    Quantity operator-(int i) const {
+        return Quantity(this->quantity - i);
+    }
+
+    Quantity operator+(const Quantity & quantity) const {
+        return Quantity(this->quantity + quantity.quantity);
+    }
+
+    Quantity& operator+=(const Quantity & quantity) {
+        this->quantity += quantity.quantity;
+        return *this;
+    }
+
+    Quantity& operator-=(const Quantity & quantity) {
+        this->quantity -= quantity.quantity;
+        return *this;
+    }
+
+    Quantity& operator-=(int i) {
+        this->quantity -= i;
+        return *this;
     }
 
     bool operator==(const Quantity & quantity) const = default;

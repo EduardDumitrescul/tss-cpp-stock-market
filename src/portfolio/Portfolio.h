@@ -7,6 +7,7 @@
 
 #include <unordered_map>
 
+#include "../stock/Stock.h"
 #include "../types/funds/Funds.h"
 #include "../types/quantity/Quantity.h"
 #include "../types/symbol/Symbol.h"
@@ -24,7 +25,12 @@ public:
     void addFunds(Funds funds);
     void withdrawFunds(Funds funds);
 
+    void addStock(Stock stock, Quantity quantity);
+    void removeStock(Stock stock, Quantity quantity);
+
+
     Funds getFunds() const;
+    Quantity getStockQuantity(Stock stock) const;
 };
 
 

@@ -20,6 +20,8 @@ public:
 
     bool operator==(const Stock& stock) const;
     Stock& operator=(const Stock& other);
+
+    Symbol getSymbol() const;
 };
 
 

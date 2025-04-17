@@ -24,6 +24,7 @@ set(TEST_SOURCES
         src/orderBook/order_book_test.cc
         src/types/price/price_test.cc
         src/trader/trader_test.cc
+        src/portfolio/portfolio_test.cc
 )
 
 # GoogleTest

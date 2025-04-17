@@ -1,12 +1,20 @@
 #include <gtest/gtest.h>
 
 #include "Portfolio.h"
+#include "../stock/Stock.h"
 
 class PortfolioTest: public testing::Test {
 protected:
     Portfolio portfolio;
     Funds funds100 = Funds(100);
     Funds funds50 = Funds(50);
+
+    Stock stockApple = Stock(Name("Apple"), Symbol("APPL"));
+    Quantity quantityApple = Quantity(10);
+    Stock stockNvidia = Stock(Name("Nvidia"), Symbol("VNDA"));
+    Quantity quantityNvidia = Quantity(20);
+    Stock stockMicrosoft = Stock(Name("Microsoft"), Symbol("MSFT"));
+
 };
 
 TEST_F(PortfolioTest, DepositFunds) {
@@ -32,4 +40,40 @@ TEST_F(PortfolioTest, WithdrawFunds) {
 TEST_F(PortfolioTest, WithdrawFunds_ErrorOnOver) {
     portfolio.addFunds(funds50);
     EXPECT_THROW(portfolio.withdrawFunds(funds100), std::exception);
+}
+
+
+TEST_F(PortfolioTest, AddStock) {
+    portfolio.addStock(stockApple, quantityApple);
+    portfolio.addStock(stockNvidia, quantityNvidia);
+
+    Quantity actualAppleStockQuantity = portfolio.getStockQuantity(stockApple);
+    Quantity actualNvidiaStockQuantity = portfolio.getStockQuantity(stockNvidia);
+
+    EXPECT_EQ(actualAppleStockQuantity, quantityApple);
+    EXPECT_EQ(actualNvidiaStockQuantity, quantityNvidia);
+}
+
+TEST_F(PortfolioTest, AddStock_MultipleTimes) {
+    portfolio.addStock(stockApple, quantityApple);
+    portfolio.addStock(stockApple, quantityApple);
+
+    Quantity actualAppleStockQuantity = portfolio.getStockQuantity(stockApple);
+
+    EXPECT_EQ(actualAppleStockQuantity, quantityApple + quantityApple);
+}
+
+TEST_F(PortfolioTest, RemoveStock) {
+    portfolio.addStock(stockApple, quantityApple);
+    portfolio.removeStock(stockApple, Quantity(2));
+
+    Quantity actualAppleStockQuantity = portfolio.getStockQuantity(stockApple);
+
+    EXPECT_EQ(actualAppleStockQuantity, quantityApple - 2);
+}
+
+TEST_F(PortfolioTest, RemoveStock_Overdraft) {
+    portfolio.addStock(stockApple, quantityApple);
+
+    EXPECT_THROW(portfolio.removeStock(stockApple, Quantity(20)), std::exception);
 }

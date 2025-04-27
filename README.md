@@ -58,7 +58,71 @@ Un **ordin** poate fi de mai multe tipuri:
 
 Cartea de ordine se actualizează în timp real. Când un **ordin** este executat, acesta dispare din listă. Dacă prețul unui activ se modifică, **cartea de ordine** va reflecta aceste schimbări. Traderii vor putea vizualiza mereu ofertele disponibile de cumpărare și vânzare.
 
+## Studii de caz și analize aprofundate
+
+Există numeroase studii de caz care evidențiază, prin analize aprofundate, importanța testării software în asigurarea calității aplicațiilor. Mai jos vom prezenta doua exemple concrete care arată impactul direct al testării asupra stabilității și satisfacției utilizatorilor.
+
+### Exemplu Practic I : Testare Software și Calitate în Sisteme de Supraveghere a Pieței - Exactpro
+
+### Context
+Exactpro a testat sisteme de supraveghere a pieței conectate la platforme de tranzacționare și furnizori de date de piață, caracterizate prin procese complexe de data mining, mecanisme de alertare și arhitecturi distribuite.
+
+### Rolul Testării în Creșterea Calității
+Pentru a asigura calitatea și conformitatea sistemelor de supraveghere a pieței, Exactpro a aplicat:
+- Construirea și întreținerea bibliotecilor de testare și regresie acoperind întregul sistem.
+- Automatizarea proceselor de testare utilizând instrumente specializate precum Sailfish și Shsha.
+- Testare end-to-end a fluxurilor de date, inclusiv injectare, capturare și comparație a rezultatelor.
+- Validarea modelelor de alertare pentru comportamente abuzive (ex: spoofing, layering) prin teste automate.
+- Verificarea consistenței datelor între sistemele externe și sistemele de supraveghere.
+- Adaptarea testării pentru sisteme moderne bazate pe cloud și integrarea AI/ML pentru detectarea automată a fraudelor.
+
+### Concluzie
+Prin optimizarea testării software:
+- S-a redus numărul de erori și alerte false în sistemele de supraveghere.
+- A crescut eficiența echipelor de conformitate, economisind timp și resurse.
+- S-a asigurat respectarea cerințelor de reglementare financiară, îmbunătățind reziliența și fiabilitatea infrastructurii de tranzacționare.
+
+### Mai multe detalii
+Pentru o analiză completă a studiului de caz, puteți consulta documentul oficial aici:  
+[A Case Study in Market Surveillance - Exactpro (PDF)](https://exactpro.com/sites/default/files/attachments/A%20Case%20Study%20in%20Market%20Surveillance_1.pdf)
+
+### Exemplu Practic II : Îmbunătățirea Calității Software prin Testare - Barclays
+
+### Context
+Barclays, una dintre principalele bănci din UK, întâmpina frecvente crash-uri și probleme de performanță în aplicația sa de mobile banking, afectând negativ experiența utilizatorilor și imaginea brandului.
+
+### Rolul Testării în Creșterea Calității
+Pentru a îmbunătăți stabilitatea și performanța aplicației, Barclays a:
+- Realizat o evaluare completă a proceselor de testare existente.
+- Implementat testare automată pentru funcționalități critice.
+- Efectuat teste de performanță și încărcare pentru a identifica blocajele.
+- Adoptat testarea continuă (CI/CT) pentru validarea constantă a noilor versiuni.
+
+### Concluzie
+Îmbunătățirile aduse testării software au avut un impact direct asupra calității aplicației:
+- Crash-urile au scăzut cu 60%.
+- Satisfacția utilizatorilor a crescut cu 30%.
+- Numărul reclamațiilor legate de aplicație a fost semnificativ redus, consolidând reputația Barclays.
+
+### Mai multe detalii
+Pentru o analiză completă a studiului de caz, puteți consulta sursa oficială aici:  
+[Software Testing Case Studies - The Knowledge Academy](https://www.theknowledgeacademy.com/blog/software-testing-case-studies/)
+
+## Evaluări Comparative
+
+Mai jos sunt prezentate câteva grafice care ilustrează comparația dintre situația inițială și rezultatele obținute după implementarea riguroasă a proceselor de testare în aplicații. Aceste evaluări evidențiază impactul direct al testării asupra stabilității, performanței și satisfacției utilizatorilor.
+
+![Impact_of_Improvements_on_Barclays’_Mobile_Banking_App](https://github.com/user-attachments/assets/ad431e25-0b70-4f34-8463-5ca242672014)
+![Impact_of_Optimisations_on_ASOS_E-commerce_Platform](https://github.com/user-attachments/assets/d7223015-52ca-412d-836b-69fe45b61c8d)
+![Impact_of_Optimisations_on_UK’s_Government_Digital_Services](https://github.com/user-attachments/assets/76fcb84b-9b37-46a1-9ba1-a461fcc89981)
+
+Pentru informații suplimentare și documentație extinsă, vă invităm să consultați secțiunea [Resurse de învățare](#resurse-de-invățare).
+
 ## Resurse de învățare
 - https://testsigma.com/blog/test-cases-for-trading-application/
 - https://codoid.com/automation-testing/comprehensive-strategies-to-test-trading-software/
 - https://www.cigniti.com/blog/testing-trading-systems-the-right-way/
+- https://exactpro.com/sites/default/files/attachments/A%20Case%20Study%20in%20Market%20Surveillance_1.pdf
+- https://www.theknowledgeacademy.com/blog/software-testing-case-studies/
+- https://duplextech.com/blogs/case-studies-successful-software-testing-projects.html
+- https://core.ac.uk/download/pdf/16333079.pdf

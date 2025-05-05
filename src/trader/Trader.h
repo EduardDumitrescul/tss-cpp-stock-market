@@ -28,6 +28,7 @@ public:
 
     Name getName() const;
     Funds getFunds() const;
+    std::shared_ptr<Portfolio> getPortfolio() const;
     TraderId getId() const;
 };
 

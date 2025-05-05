@@ -18,6 +18,10 @@ Funds Trader::getFunds() const {
     return portfolio->getFunds();
 }
 
+std::shared_ptr<Portfolio> Trader::getPortfolio() const {
+    return portfolio;
+}
+
 TraderId Trader::getId() const {
     return id;
 }

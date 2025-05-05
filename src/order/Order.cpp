@@ -4,6 +4,12 @@
 
 #include "Order.h"
 
+void Order::assertTraderHasSufficientFunds() const {
+    if (this->quantity.getValue() * this->price.getValue() > trader->getFunds().getValue()) {
+        throw std::invalid_argument("Not enough funds for order");
+    }
+}
+
 Order::Order(
     const std::shared_ptr<const Trader> &trader,
     const Stock& stock,
@@ -14,7 +20,7 @@ trader(trader),
 stock(stock),
 quantity(quantity),
 price(price) {
-
+    assertTraderHasSufficientFunds();
 }
 
 Order::Order(const Order* other):

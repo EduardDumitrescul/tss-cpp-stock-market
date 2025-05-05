@@ -10,14 +10,22 @@
 class Price {
     long long price;
 
+    void assertNotNegative() const {
+        if (price < 0) {
+            throw std::invalid_argument("Price cannot be negative. Current value: " + std::to_string(price));
+        }
+    }
 public:
-    Price(long long price):price(price) {}
+    explicit Price(const long long price):
+    price(price) {
+        assertNotNegative();
+    }
 
     auto operator<=>(const Price & price) const = default;
 
     std::string toString() const {
-        long long integerPart = price / 1000000;
-        long long fractionalPart = price % 1000000;
+        const long long integerPart = price / 1000000;
+        const long long fractionalPart = price % 1000000;
 
         std::ostringstream oss;
         oss << integerPart << "." << std::setw(6) << std::setfill('0') << fractionalPart;

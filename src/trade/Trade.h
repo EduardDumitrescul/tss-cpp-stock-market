@@ -9,6 +9,7 @@
 #include "../stock/Stock.h"
 #include "../types/price/Price.h"
 #include "../types/quantity/Quantity.h"
+#include "../types/funds/Funds.h"
 
 class Trader;
 
@@ -24,22 +25,21 @@ public:
         const std::shared_ptr<const Trader> &buyer,
         const std::shared_ptr<const Trader> &seller,
         const Stock &stock,
-        const Quantity quantity,
-        const Price price
-    ):
-    buyer(buyer),
-    seller(seller),
-    stock(stock),
-    quantity(quantity),
-    price(price) {}
+        Quantity quantity,
+        Price price
+    );
 
-    bool operator==(const Trade &other) const {
-        return buyer == other.buyer
-        && seller == other.seller
-        && stock == other.stock
-        && quantity == other.quantity
-        && price == other.price;
-    }
+    bool operator==(const Trade &other) const;
+
+    std::shared_ptr<const Trader> getBuyer() const;
+
+    std::shared_ptr<const Trader> getSeller() const;
+
+    const Stock &getStock() const;
+
+    const Quantity &getQuantity() const;
+
+    Funds getTotalFunds() const;
 };
 
 #endif //TRADE_H

@@ -23,6 +23,10 @@ public:
 
     auto operator<=>(const Price & price) const = default;
 
+    long long getValue() const {
+        return price;
+    }
+
     std::string toString() const {
         const long long integerPart = price / 1000000;
         const long long fractionalPart = price % 1000000;

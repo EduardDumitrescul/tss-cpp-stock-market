@@ -23,7 +23,8 @@ class Funds {
     }
 
 public:
-    explicit Funds(const long long amount):
+    explicit Funds
+    (const long long amount):
     amount(amount) {
         assertNotNegative();
         assertAtMostOneBillion();
@@ -39,6 +40,10 @@ public:
     Funds operator-(const Funds & funds) const {
         const Funds updatedFunds(amount - funds.amount);
         return updatedFunds;
+    }
+
+    long long getValue() const {
+        return amount;
     }
 };
 

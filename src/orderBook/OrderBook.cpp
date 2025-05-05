@@ -4,7 +4,7 @@
 
 #include "OrderBook.h"
 
-void OrderBook::assertOrderStockSameAsOrderBookStock(Order order) const {
+void OrderBook::assertOrderStockSameAsOrderBookStock(const Order& order) const {
     if (order.getStock() != stock) {
         throw std::invalid_argument("Order does not belong in this OrderBook - different stock");
     }
@@ -59,41 +59,38 @@ std::vector<Trade> OrderBook::matchOrders() {
         removeBestSellOrder();
         removeBestBuyOrder();
 
-        Quantity tradeQuantity(std::min(sellOrder.getQuantity(), buyOrder.getQuantity()));
-        Price tradePrice(sellOrder.getPrice());
+        const Quantity tradeQuantity(std::min(sellOrder.getQuantity(), buyOrder.getQuantity()));
+        const Price tradePrice(sellOrder.getPrice());
         Trade trade(buyOrder.getTrader(), sellOrder.getTrader(), buyOrder.getStock(), tradeQuantity, tradePrice);
         trades.push_back(trade);
 
-        long long remainingSellQuantity = sellOrder.getQuantity().getValue() - buyOrder.getQuantity().getValue();
+        const long long remainingSellQuantity = sellOrder.getQuantity().getValue() - buyOrder.getQuantity().getValue();
         if (remainingSellQuantity > 0) {
             sellOrder.setQuantity(Quantity(remainingSellQuantity));
             sellOrders.push(sellOrder);
         }
 
-        long long remainingBuyQuantity = buyOrder.getQuantity().getValue() - sellOrder.getQuantity().getValue();
+        const long long remainingBuyQuantity = buyOrder.getQuantity().getValue() - sellOrder.getQuantity().getValue();
         if (remainingBuyQuantity > 0) {
             buyOrder.setQuantity(Quantity(remainingBuyQuantity));
            buyOrders.push(buyOrder);
         }
-
-
-
     }
     return trades;
 }
 
-OrderBook::OrderBook(Stock stock):
+OrderBook::OrderBook(const Stock& stock):
 stock(stock){
 
 }
 
-std::vector<Trade> OrderBook::addBuyOrder(Order order) {
+std::vector<Trade> OrderBook::addBuyOrder(const Order& order) {
     assertOrderStockSameAsOrderBookStock(order);
     buyOrders.push(order);
     return matchOrders();
 }
 
-std::vector<Trade> OrderBook::addSellOrder(Order order) {
+std::vector<Trade> OrderBook::addSellOrder(const Order& order) {
     assertOrderStockSameAsOrderBookStock(order);
     sellOrders.push(order);
     return matchOrders();

@@ -5,10 +5,10 @@
 #include "Order.h"
 
 Order::Order(
-    std::shared_ptr<const Trader> trader,
-    Stock stock,
-    Quantity quantity,
-    Price price
+    const std::shared_ptr<const Trader> &trader,
+    const Stock& stock,
+    const Quantity quantity,
+    const Price price
 ):
 trader(trader),
 stock(stock),
@@ -54,7 +54,7 @@ Quantity Order::getQuantity() const {
     return quantity;
 }
 
-void Order::setQuantity(Quantity q) {
+void Order::setQuantity(const Quantity q) {
     quantity = q;
 }
 

@@ -20,8 +20,8 @@ class Order {
 
 public:
     Order(
-        std::shared_ptr<const Trader> trader,
-        Stock stock,
+        const std::shared_ptr<const Trader> &trader,
+        const Stock& stock,
         Quantity quantity,
         Price price
     );

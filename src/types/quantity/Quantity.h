@@ -31,7 +31,7 @@ public:
 
     Quantity(const Quantity&) = default;
 
-    bool operator==(int i) const {
+    bool operator==(const int i) const {
         return  quantity == i;
     }
 
@@ -40,7 +40,7 @@ public:
     Quantity operator-(const Quantity & quantity) const {
         return Quantity(this->quantity - quantity.quantity);
     }
-    Quantity operator-(int i) const {
+    Quantity operator-(const int i) const {
         return Quantity(this->quantity - i);
     }
 
@@ -58,7 +58,7 @@ public:
         return *this;
     }
 
-    Quantity& operator-=(int i) {
+    Quantity& operator-=(const int i) {
         this->quantity -= i;
         return *this;
     }

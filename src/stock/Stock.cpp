@@ -4,7 +4,7 @@
 
 #include "Stock.h"
 
-Stock::Stock(Name name, Symbol symbol):
+Stock::Stock(const Name& name, const Symbol& symbol):
 name(name), symbol(symbol){
 
 }

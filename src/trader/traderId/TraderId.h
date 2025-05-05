@@ -11,7 +11,7 @@ class TraderId {
     static int counter;
     const int id;
 
-    explicit TraderId(int id): id(id) {}
+    explicit TraderId(const int id): id(id) {}
 public:
     int getValue() const;
 

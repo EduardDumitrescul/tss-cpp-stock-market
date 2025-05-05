@@ -23,7 +23,7 @@ class Funds {
     }
 
 public:
-    explicit Funds(long long amount):
+    explicit Funds(const long long amount):
     amount(amount) {
         assertNotNegative();
         assertAtMostOneBillion();
@@ -32,12 +32,12 @@ public:
     bool operator==(const Funds &) const = default;
 
     Funds operator+(const Funds& funds) const {
-        Funds updatedFunds(amount + funds.amount);
+        const Funds updatedFunds(amount + funds.amount);
         return updatedFunds;
     }
 
     Funds operator-(const Funds & funds) const {
-        Funds updatedFunds(amount - funds.amount);
+        const Funds updatedFunds(amount - funds.amount);
         return updatedFunds;
     }
 };

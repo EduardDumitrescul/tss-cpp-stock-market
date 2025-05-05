@@ -21,19 +21,19 @@ class Portfolio {
     std::unordered_map<Symbol, Quantity> stocks;
 
 public:
-    explicit Portfolio(std::shared_ptr <const Trader> owner);
+    explicit Portfolio(const std::shared_ptr <const Trader> &owner);
 
     explicit Portfolio(const Portfolio* other);
 
     void addFunds(Funds funds);
     void withdrawFunds(Funds funds);
 
-    void addStock(Stock stock, Quantity quantity);
-    void removeStock(Stock stock, Quantity quantity);
+    void addStock(const Stock& stock, Quantity quantity);
+    void removeStock(const Stock& stock, Quantity quantity);
 
 
     Funds getFunds() const;
-    Quantity getStockQuantity(Stock stock) const;
+    Quantity getStockQuantity(const Stock& stock) const;
     std::shared_ptr<const Trader> getOwner() const;
 };
 

@@ -16,7 +16,7 @@ class Stock {
     Symbol symbol;
 
 public:
-    Stock(Name name, Symbol symbol);
+    Stock(const Name& name, const Symbol &symbol);
 
     bool operator==(const Stock& stock) const;
     Stock& operator=(const Stock& other);

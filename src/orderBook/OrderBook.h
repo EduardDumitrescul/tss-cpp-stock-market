@@ -29,7 +29,7 @@ class OrderBook {
     std::priority_queue <Order, std::vector<Order>, BuyOrderComparator> buyOrders;
 
 
-    void assertOrderStockSameAsOrderBookStock(Order order) const;
+    void assertOrderStockSameAsOrderBookStock(const Order& order) const;
 
     bool sellOrdersExist() const;
     bool buyOrdersExist() const;
@@ -42,10 +42,10 @@ class OrderBook {
     std::vector<Trade> matchOrders();
 
 public:
-    explicit OrderBook(Stock stock);
+    explicit OrderBook(const Stock& stock);
 
-    std::vector<Trade> addBuyOrder(Order order);
-    std::vector<Trade> addSellOrder(Order order);
+    std::vector<Trade> addBuyOrder(const Order& order);
+    std::vector<Trade> addSellOrder(const Order& order);
 
     Order bestSellOrder() const;
     Order bestBuyOrder() const;

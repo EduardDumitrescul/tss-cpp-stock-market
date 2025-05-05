@@ -5,30 +5,30 @@
 #include "Portfolio.h"
 
 Portfolio::Portfolio(
-    std::shared_ptr<const Trader> owner
+    const std::shared_ptr<const Trader> &owner
 ):owner(owner), funds(0), stocks() {
 }
 
 Portfolio::Portfolio(const Portfolio *other):
 owner(other->owner),
-stocks(other->stocks),
-funds(other->funds)
+funds(other->funds),
+stocks(other->stocks)
 {
 }
 
-void Portfolio::addFunds(Funds funds) {
+void Portfolio::addFunds(const Funds funds) {
     this->funds = this->funds + funds;
 }
 
-void Portfolio::withdrawFunds(Funds funds) {
+void Portfolio::withdrawFunds(const Funds funds) {
     this->funds = this->funds - funds;
 }
 
-void Portfolio::addStock(Stock stock, Quantity quantity) {
+void Portfolio::addStock(const Stock& stock, const Quantity quantity) {
     stocks[stock.getSymbol()] += quantity;
 }
 
-void Portfolio::removeStock(Stock stock, Quantity quantity) {
+void Portfolio::removeStock(const Stock& stock, const Quantity quantity) {
     if (stocks.at(stock.getSymbol()) < quantity) {
         throw std::runtime_error("You don't have enough stocks.");
     }
@@ -39,7 +39,7 @@ Funds Portfolio::getFunds() const {
     return funds;
 }
 
-Quantity Portfolio::getStockQuantity(Stock stock) const {
+Quantity Portfolio::getStockQuantity(const Stock& stock) const {
     return stocks.at(stock.getSymbol());
 }
 

@@ -11,6 +11,11 @@ protected:
     OrderBook orderBook = OrderBook(appleStock);
     std::shared_ptr<Trader> trader = std::make_shared<Trader>(Name("Edi"));
     std::shared_ptr<Trader> trader2 = std::make_shared<Trader>(Name("Alex"));
+
+    void SetUp() override {
+        trader->depositFunds(Funds(10e8));
+        trader2->depositFunds(Funds(10e8));
+    }
 };
 
 TEST_F(OrderBookTest, AddBuyOrder) {

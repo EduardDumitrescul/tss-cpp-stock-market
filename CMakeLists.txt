@@ -5,6 +5,7 @@ set(CMAKE_CXX_STANDARD 20)
 
 # Implementation sources
 set(IMPL_SOURCES
+        src/trade/Trade.cpp
         src/trader/Trader.cpp
         src/trader/manager/TraderManager.cpp
         src/portfolio/Portfolio.cpp
@@ -26,6 +27,7 @@ set(TEST_SOURCES
         src/types/price/price_test.cc
         src/trader/trader_test.cc
         src/portfolio/portfolio_test.cc
+        src/order/order_test.cc
         src/trader/traderId/trader_id_test.cc
         src/stockMarket/stock_market_test.cc
 )

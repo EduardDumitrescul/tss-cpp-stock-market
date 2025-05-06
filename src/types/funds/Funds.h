@@ -45,6 +45,8 @@ public:
     long long getValue() const {
         return amount;
     }
+
+    auto operator<=>(const Funds & funds) const = default;
 };
 
 #endif //FUNDS_H

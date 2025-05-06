@@ -13,14 +13,9 @@ class StockMarket {
     std::unordered_map<Symbol, std::shared_ptr<OrderBook>> orderBooks;
     std::unordered_map<TraderId, std::shared_ptr<Portfolio>> portfolios;
 
-    void assertOrderBookForStockDoesNotExist(const Stock& stock) const;
-    void assertOrderBookForStockExists(const Stock& stock) const;
-    void assertPortfolioForTraderIdExists(TraderId traderId) const;
-    void assertTraderIsNotRegistered(const std::shared_ptr<const Trader>& trader) const;
+    friend class StockMarketValidator;
 
 public:
-    static void applyTradesToPortfolios(const std::vector<Trade>& trades);
-
     std::vector<Trade> placeBuyOrder(const Order &order) const;
     std::vector<Trade> placeSellOrder(const Order &order) const;
 

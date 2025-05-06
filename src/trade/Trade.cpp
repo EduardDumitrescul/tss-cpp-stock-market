@@ -41,6 +41,10 @@ const Quantity &Trade::getQuantity() const {
     return quantity;
 }
 
+const Price &Trade::getPrice() const {
+    return price;
+}
+
 Funds Trade::getTotalFunds() const {
     return Funds(quantity.getValue() * price.getValue());
 }

@@ -39,6 +39,8 @@ public:
 
     const Quantity &getQuantity() const;
 
+    const Price &getPrice() const;
+
     Funds getTotalFunds() const;
 };
 

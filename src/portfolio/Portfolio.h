@@ -31,6 +31,8 @@ public:
     void addStock(const Stock& stock, Quantity quantity);
     void removeStock(const Stock& stock, Quantity quantity);
 
+    bool hasStock(const Stock& stock, Quantity quantity) const;
+    bool hasFunds(const Funds& funds) const;
 
     Funds getFunds() const;
     Quantity getStockQuantity(const Stock& stock) const;

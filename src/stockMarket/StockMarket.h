@@ -19,8 +19,10 @@ class StockMarket {
     void assertTraderIsNotRegistered(const std::shared_ptr<const Trader>& trader) const;
 
 public:
-    // void placeBuyOrder(std::shared_ptr<const Trader>, Order order) const;
-    // void placeSellOrder(std::shared_ptr<const Trader>, Order order) const;
+    static void applyTradesToPortfolios(const std::vector<Trade>& trades);
+
+    std::vector<Trade> placeBuyOrder(const Order &order) const;
+    std::vector<Trade> placeSellOrder(const Order &order) const;
 
     void registerStock(const Stock& stock);
     void registerTrader(const std::shared_ptr<Trader>& trader);

@@ -28,6 +28,37 @@ void StockMarket::assertTraderIsNotRegistered(const std::shared_ptr<const Trader
     }
 }
 
+void StockMarket::applyTradesToPortfolios(const std::vector<Trade> &trades) {
+    if (trades.empty()) {
+        return;
+    }
+    for (const Trade &trade : trades) {
+        const auto tradeFunds = trade.getTotalFunds();
+        trade.getBuyer()->withdrawFunds(tradeFunds);
+        trade.getBuyer()->portfolio->addStock(trade.getStock(), trade.getQuantity());
+        trade.getSeller()->depositFunds(tradeFunds);
+        trade.getSeller()->portfolio->removeStock(trade.getStock(), trade.getQuantity());
+    }
+}
+
+std::vector<Trade> StockMarket::placeBuyOrder(const Order &order) const {
+    assertPortfolioForTraderIdExists(order.getTrader()->getId());
+    assertOrderBookForStockExists(order.getStock());
+
+    auto trades = this->orderBooks.at(order.getStock().getSymbol())->addBuyOrder(order);
+    applyTradesToPortfolios(trades);
+    return trades;
+}
+
+std::vector<Trade> StockMarket::placeSellOrder(const Order &order) const {
+    assertPortfolioForTraderIdExists(order.getTrader()->getId());
+    assertOrderBookForStockExists(order.getStock());
+
+    auto trades = this->orderBooks.at(order.getStock().getSymbol())->addSellOrder(order);
+    applyTradesToPortfolios(trades);
+    return trades;
+}
+
 void StockMarket::registerStock(const Stock& stock) {
     assertOrderBookForStockDoesNotExist(stock);
     orderBooks.insert({stock.getSymbol(), std::make_shared<OrderBook>(stock)});

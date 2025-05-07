@@ -9,13 +9,6 @@ Portfolio::Portfolio(
 ):owner(owner), funds(0), stocks() {
 }
 
-Portfolio::Portfolio(const Portfolio *other):
-owner(other->owner),
-funds(other->funds),
-stocks(other->stocks)
-{
-}
-
 void Portfolio::addFunds(const Funds funds) {
     this->funds = this->funds + funds;
 }

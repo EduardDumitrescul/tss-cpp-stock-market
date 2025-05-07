@@ -23,7 +23,7 @@ class Portfolio {
 public:
     explicit Portfolio(const std::shared_ptr <const Trader> &owner);
 
-    explicit Portfolio(const Portfolio* other);
+    Portfolio(const Portfolio& other) = default;
 
     void addFunds(Funds funds);
     void withdrawFunds(Funds funds);

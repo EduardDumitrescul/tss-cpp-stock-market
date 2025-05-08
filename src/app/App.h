@@ -11,11 +11,15 @@
 
 
 class App {
-    std::shared_ptr<const StockMarket> stockMarket;
-
+    std::shared_ptr<StockMarket> stockMarket;
     std::unique_ptr<TraderManager> traderManager;
 
 public:
+
+    App();
+
+    StockMarket* getStockMarket();
+    TraderManager* getTraderManager();
 
 };
 

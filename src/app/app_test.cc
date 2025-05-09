@@ -82,19 +82,6 @@ protected:
         app.getStockMarket()->registerStock(Stock(Name("Intel"), Symbol("INTC")));
         app.getStockMarket()->registerStock(Stock(Name("AMD"), Symbol("AMD")));
 
-        std::cout << app.getStockMarket()->getPortfolio(app.getTraderManager()->getTraders()[0]->getId())<< std::endl;
-        std::cout << app.getTraderManager()->getTraders()[0]->getPortfolio()<< std::endl;
-        //std::cout << app.getStockMarket()->getPortfolio(app.getTraderManager()->getTraders()[1]->getId())<< std::endl;
-        //std::cout << app.getStockMarket()->getPortfolio(app.getTraderManager()->getTraders()[2]->getId())<< std::endl;
-
-        std::cout << app.getStockMarket()->getOrderBook(Stock(Name("Apple"), Symbol("APPL")))->getBuyOrders().size() << std::endl;
-
-
-
-
-
-
-
     }
 
 };
@@ -139,6 +126,42 @@ TEST_F(AppTest, End2EndTest) {
     EXPECT_EQ(app.getStockMarket()->getOrderBook(Stock(Name("Nvidia"), Symbol("NVDA")))->getSellOrders().size(), 0);
     EXPECT_EQ(app.getStockMarket()->getOrderBook(Stock(Name("Microsoft"), Symbol("MSFT")))->getBuyOrders().size(), 0);
     EXPECT_EQ(app.getStockMarket()->getOrderBook(Stock(Name("Microsoft"), Symbol("MSFT")))->getSellOrders().size(), 0);
+
+
+    // Simulation of a real user interacting with the app (Alexco is the main character of this simulation)
+
+    // Setup of actual existing sell orders
+    app.getStockMarket()->placeSellOrder(Order(
+        app.getTraderManager()->getTraders()[1],
+        Stock(Name("Apple"), Symbol("APPL")),
+        Quantity(25),
+        Price(100)
+    ));
+
+    app.getStockMarket()->placeSellOrder(Order(
+    app.getTraderManager()->getTraders()[2],
+    Stock(Name("Microsoft"), Symbol("MSFT")),
+    Quantity(100),
+    Price(5)
+    ));
+
+    app.getStockMarket()->placeSellOrder(Order(
+        app.getTraderManager()->getTraders()[0],
+        Stock(Name("Apple"), Symbol("APPL")),
+        Quantity(20),
+        Price(10000)
+    ));
+
+    // Check if the order is correctly placed
+    //EXPECT_EQ(app.getStockMarket()->getOrderBook(Stock(Name("Apple"), Symbol("APPL")))->getSellOrders().size(), 1);
+    //EXPECT_EQ(app.getStockMarket()->getOrderBook(Stock(Name("Microsoft"), Symbol("MSFT")))->getSellOrders().size(), 1);
+
+
+    //EXPECT_EQ(app.getTraderManager()->getTraders()[1]->getPortfolio()->hasStock(Stock(Name("Apple"), Symbol("APPL")), Quantity(20)), true);
+   // EXPECT_EQ(app.getTraderManager()->getTraders()[1]->getPortfolio()->hasStock(Stock(Name("Apple"), Symbol("APPL")), Quantity(40)), false);
+    //EXPECT_EQ(app.getTraderManager()->getTraders()[1]->getPortfolio()->hasStock(Stock(Name("Apple"), Symbol("APPL")), Quantity(55)), false);
+
+
 
 
 

@@ -19,9 +19,7 @@ Order::Order(
 trader(trader),
 stock(stock),
 quantity(quantity),
-price(price) {
-    assertTraderHasSufficientFunds();
-}
+price(price) {}
 
 Order::Order(const Order* other):
 trader(other->trader),

@@ -60,12 +60,39 @@ protected:
         app.getTraderManager()->getTraders()[2]->getPortfolio()->addStock(Stock(Name("AMD"), Symbol("AMD")), Quantity(10));
 
 
+        // Initialize the stock market
+
+        // Register traders
+        app.getStockMarket()->registerTrader(std::const_pointer_cast<Trader>(app.getTraderManager()->getTraders()[0]));
+        app.getStockMarket()->registerTrader(std::const_pointer_cast<Trader>(app.getTraderManager()->getTraders()[1]));
+        app.getStockMarket()->registerTrader(std::const_pointer_cast<Trader>(app.getTraderManager()->getTraders()[2]));
+
+        // Register stocks
+        app.getStockMarket()->registerStock(Stock(Name("Apple"), Symbol("APPL")));
+        app.getStockMarket()->registerStock(Stock(Name("Nvidia"), Symbol("NVDA")));
+        app.getStockMarket()->registerStock(Stock(Name("Microsoft"), Symbol("MSFT")));
+        app.getStockMarket()->registerStock(Stock(Name("Tesla"), Symbol("TSLA")));
+        app.getStockMarket()->registerStock(Stock(Name("Google"), Symbol("GOOGL")));
+        app.getStockMarket()->registerStock(Stock(Name("Amazon"), Symbol("AMZN")));
+        app.getStockMarket()->registerStock(Stock(Name("Meta"), Symbol("META")));
+        app.getStockMarket()->registerStock(Stock(Name("Netflix"), Symbol("NFLX")));
+        app.getStockMarket()->registerStock(Stock(Name("Adobe"), Symbol("ADBE")));
+        app.getStockMarket()->registerStock(Stock(Name("Salesforce"), Symbol("CRM")));
+        app.getStockMarket()->registerStock(Stock(Name("IBM"), Symbol("IBM")));
+        app.getStockMarket()->registerStock(Stock(Name("Intel"), Symbol("INTC")));
+        app.getStockMarket()->registerStock(Stock(Name("AMD"), Symbol("AMD")));
+
+        std::cout << app.getStockMarket()->getPortfolio(app.getTraderManager()->getTraders()[0]->getId())<< std::endl;
+        std::cout << app.getTraderManager()->getTraders()[0]->getPortfolio()<< std::endl;
+        //std::cout << app.getStockMarket()->getPortfolio(app.getTraderManager()->getTraders()[1]->getId())<< std::endl;
+        //std::cout << app.getStockMarket()->getPortfolio(app.getTraderManager()->getTraders()[2]->getId())<< std::endl;
+
+        std::cout << app.getStockMarket()->getOrderBook(Stock(Name("Apple"), Symbol("APPL")))->getBuyOrders().size() << std::endl;
 
 
 
 
-        std::cout << "Traders: " << app.getTraderManager()->getTraders()[2]->getName().toString() << std::endl;
-        std::cout << "Has Apple Stock? " << app.getTraderManager()->getTraders()[0]->getPortfolio()->hasStock(Stock(Name("Apple"), Symbol("APPL")), Quantity(100)) << std::endl;
+
 
 
     }
@@ -75,16 +102,18 @@ protected:
 TEST_F(AppTest, End2EndTest) {
 
     // Test the setup of the app
+
+    // Check if the traders are correctly initialized
     EXPECT_EQ(app.getTraderManager()->getTraders()[0]->getName().toString(), "Alexco");
     EXPECT_EQ(app.getTraderManager()->getTraders()[1]->getName().toString(), "Edi");
     EXPECT_EQ(app.getTraderManager()->getTraders()[2]->getName().toString(), "GFA");
 
-
+    // Check if the funds are correctly registered
     EXPECT_EQ(app.getTraderManager()->getTraders()[0]->getFunds().getValue(), 1500);
     EXPECT_EQ(app.getTraderManager()->getTraders()[1]->getFunds().getValue(), 1000);
     EXPECT_EQ(app.getTraderManager()->getTraders()[2]->getFunds().getValue(), 1200);
 
-
+    // Check if the stocks for portofolios are correctly registered for each trader
     EXPECT_EQ(app.getTraderManager()->getTraders()[0]->getPortfolio()->hasStock(Stock(Name("Apple"), Symbol("APPL")), Quantity(100)), true);
     EXPECT_EQ(app.getTraderManager()->getTraders()[0]->getPortfolio()->hasStock(Stock(Name("Apple"), Symbol("APPL")), Quantity(50)), true);
     EXPECT_EQ(app.getTraderManager()->getTraders()[0]->getPortfolio()->hasStock(Stock(Name("Apple"), Symbol("APPL")), Quantity(150)), false);
@@ -96,6 +125,20 @@ TEST_F(AppTest, End2EndTest) {
     EXPECT_EQ(app.getTraderManager()->getTraders()[2]->getPortfolio()->hasStock(Stock(Name("AMD"), Symbol("AMD")), Quantity(10)), true);
     EXPECT_EQ(app.getTraderManager()->getTraders()[2]->getPortfolio()->hasStock(Stock(Name("AMD"), Symbol("AMD")), Quantity(1)), true);
     EXPECT_EQ(app.getTraderManager()->getTraders()[2]->getPortfolio()->hasStock(Stock(Name("AMD"), Symbol("AMD")), Quantity(400)), false);
+
+
+    // Check if the portofolios are correctly registered among the traders and the stock market
+    EXPECT_EQ(app.getStockMarket()->getPortfolio(app.getTraderManager()->getTraders()[0]->getId()), app.getTraderManager()->getTraders()[0]->getPortfolio());
+    EXPECT_EQ(app.getStockMarket()->getPortfolio(app.getTraderManager()->getTraders()[1]->getId()), app.getTraderManager()->getTraders()[1]->getPortfolio());
+    EXPECT_EQ(app.getStockMarket()->getPortfolio(app.getTraderManager()->getTraders()[2]->getId()), app.getTraderManager()->getTraders()[2]->getPortfolio());
+
+    // Check if the stocks are correctly registered in the stock market
+    EXPECT_EQ(app.getStockMarket()->getOrderBook(Stock(Name("Apple"), Symbol("APPL")))->getBuyOrders().size(), 0);
+    EXPECT_EQ(app.getStockMarket()->getOrderBook(Stock(Name("Apple"), Symbol("APPL")))->getSellOrders().size(), 0);
+    EXPECT_EQ(app.getStockMarket()->getOrderBook(Stock(Name("Nvidia"), Symbol("NVDA")))->getBuyOrders().size(), 0);
+    EXPECT_EQ(app.getStockMarket()->getOrderBook(Stock(Name("Nvidia"), Symbol("NVDA")))->getSellOrders().size(), 0);
+    EXPECT_EQ(app.getStockMarket()->getOrderBook(Stock(Name("Microsoft"), Symbol("MSFT")))->getBuyOrders().size(), 0);
+    EXPECT_EQ(app.getStockMarket()->getOrderBook(Stock(Name("Microsoft"), Symbol("MSFT")))->getSellOrders().size(), 0);
 
 
 

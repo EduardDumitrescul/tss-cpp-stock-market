@@ -131,30 +131,34 @@ TEST_F(AppTest, End2EndTest) {
     // Simulation of a real user interacting with the app (Alexco is the main character of this simulation)
 
     // Setup of actual existing sell orders
+    // Edi is selling 25 stocks of Apple at 10, he has 55 stocks in portofolio
     app.getStockMarket()->placeSellOrder(Order(
         app.getTraderManager()->getTraders()[1],
         Stock(Name("Apple"), Symbol("APPL")),
         Quantity(25),
-        Price(100)
+        Price(10)
     ));
 
+    // GFA is selling 100 stocks of Microsoft at 20, he has 150 stocks in portofolio
     app.getStockMarket()->placeSellOrder(Order(
     app.getTraderManager()->getTraders()[2],
     Stock(Name("Microsoft"), Symbol("MSFT")),
     Quantity(100),
-    Price(5)
-    ));
-
-    app.getStockMarket()->placeSellOrder(Order(
-        app.getTraderManager()->getTraders()[0],
-        Stock(Name("Apple"), Symbol("APPL")),
-        Quantity(20),
-        Price(10000)
+    Price(20)
     ));
 
     // Check if the order is correctly placed
-    //EXPECT_EQ(app.getStockMarket()->getOrderBook(Stock(Name("Apple"), Symbol("APPL")))->getSellOrders().size(), 1);
-    //EXPECT_EQ(app.getStockMarket()->getOrderBook(Stock(Name("Microsoft"), Symbol("MSFT")))->getSellOrders().size(), 1);
+    EXPECT_EQ(app.getStockMarket()->getOrderBook(Stock(Name("Apple"), Symbol("APPL")))->getSellOrders().size(), 1);
+    EXPECT_EQ(app.getStockMarket()->getOrderBook(Stock(Name("Microsoft"), Symbol("MSFT")))->getSellOrders().size(), 1);
+
+    // app.getStockMarket()->placeBuyOrder(Order(
+    //     app.getTraderManager()->getTraders()[0],
+    //     Stock(Name("Apple"), Symbol("APPL")),
+    //     Quantity(20),
+    //     Price(10000)
+    // ));
+
+
 
 
     //EXPECT_EQ(app.getTraderManager()->getTraders()[1]->getPortfolio()->hasStock(Stock(Name("Apple"), Symbol("APPL")), Quantity(20)), true);

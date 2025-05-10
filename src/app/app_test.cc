@@ -86,6 +86,7 @@ protected:
 
 };
 
+// End2EndTest for the app which simulates a real environment in which a user Alexco wants to use the app
 TEST_F(AppTest, End2EndTest) {
 
     // Test the setup of the app
@@ -151,25 +152,85 @@ TEST_F(AppTest, End2EndTest) {
     EXPECT_EQ(app.getStockMarket()->getOrderBook(Stock(Name("Apple"), Symbol("APPL")))->getSellOrders().size(), 1);
     EXPECT_EQ(app.getStockMarket()->getOrderBook(Stock(Name("Microsoft"), Symbol("MSFT")))->getSellOrders().size(), 1);
 
-    // app.getStockMarket()->placeBuyOrder(Order(
-    //     app.getTraderManager()->getTraders()[0],
-    //     Stock(Name("Apple"), Symbol("APPL")),
-    //     Quantity(20),
-    //     Price(10000)
-    // ));
 
+    // Alexco is placing a buy order for 10 stocks of Apple at 10
+    app.getStockMarket()->placeBuyOrder(Order(
+        app.getTraderManager()->getTraders()[0],
+        Stock(Name("Apple"), Symbol("APPL")),
+        Quantity(10),
+        Price(10)
+    ));
 
+    // Check if the result of the order has been processed for the buyer
+    EXPECT_EQ(app.getTraderManager()->getTraders()[0]->getPortfolio()->hasStock(Stock(Name("Apple"), Symbol("APPL")), Quantity(110)), true);
+    EXPECT_EQ(app.getTraderManager()->getTraders()[0]->getFunds(), Funds(1500 - 10 * 10));
 
+    // Check if the result of the order has been processed for the seller
+    EXPECT_EQ(app.getTraderManager()->getTraders()[1]->getPortfolio()->hasStock(Stock(Name("Apple"), Symbol("APPL")), Quantity(55)), false);
+    EXPECT_EQ(app.getTraderManager()->getTraders()[1]->getPortfolio()->hasStock(Stock(Name("Apple"), Symbol("APPL")), Quantity(45)), true);
+    EXPECT_EQ(app.getTraderManager()->getTraders()[1]->getFunds(), Funds(1000 + 10 * 10));
 
-    //EXPECT_EQ(app.getTraderManager()->getTraders()[1]->getPortfolio()->hasStock(Stock(Name("Apple"), Symbol("APPL")), Quantity(20)), true);
-   // EXPECT_EQ(app.getTraderManager()->getTraders()[1]->getPortfolio()->hasStock(Stock(Name("Apple"), Symbol("APPL")), Quantity(40)), false);
-    //EXPECT_EQ(app.getTraderManager()->getTraders()[1]->getPortfolio()->hasStock(Stock(Name("Apple"), Symbol("APPL")), Quantity(55)), false);
+    // Alexco is placing a buy order for 20 stocks of Microsoft at 25
+    app.getStockMarket()->placeBuyOrder(Order(
+        app.getTraderManager()->getTraders()[0],
+        Stock(Name("Microsoft"), Symbol("MSFT")),
+        Quantity(20),
+        Price(25)
+    ));
 
+    // Check if the result of the order has been processed for the buyer
+    EXPECT_EQ(app.getTraderManager()->getTraders()[0]->getPortfolio()->hasStock(Stock(Name("Microsoft"), Symbol("MSFT")), Quantity(70)), true);
+    EXPECT_EQ(app.getTraderManager()->getTraders()[0]->getFunds(), Funds(1500 - 10 * 10 - 20 * 20));
 
+    // Check if the result of the order has been processed for the seller
+    EXPECT_EQ(app.getTraderManager()->getTraders()[2]->getPortfolio()->hasStock(Stock(Name("Microsoft"), Symbol("MSFT")), Quantity(150)), false);
+    EXPECT_EQ(app.getTraderManager()->getTraders()[2]->getPortfolio()->hasStock(Stock(Name("Microsoft"), Symbol("MSFT")), Quantity(125)), true);
+    EXPECT_EQ(app.getTraderManager()->getTraders()[2]->getFunds(), Funds(1200 + 20 * 20));
 
+    // GFA wants to withdraw some funds
+    app.getTraderManager()->getTraders()[2]->withdrawFunds(Funds(100));
+    EXPECT_EQ(app.getTraderManager()->getTraders()[2]->getFunds(), Funds(1200 + 20 * 20 - 100));
 
+    // Alexco wants to buy more stocks of Apple (30 stocks at 10)
+    app.getStockMarket()->placeBuyOrder(Order(
+        app.getTraderManager()->getTraders()[0],
+        Stock(Name("Apple"), Symbol("APPL")),
+        Quantity(30),
+        Price(10)
+    ));
 
+    // Check if the result of the order has been processed for the buyer
+    EXPECT_EQ(app.getTraderManager()->getTraders()[0]->getPortfolio()->hasStock(Stock(Name("Apple"), Symbol("APPL")), Quantity(125)), true);
+    EXPECT_EQ(app.getTraderManager()->getTraders()[0]->getPortfolio()->hasStock(Stock(Name("Apple"), Symbol("APPL")), Quantity(140)), false);
+    EXPECT_EQ(app.getTraderManager()->getTraders()[0]->getFunds(), Funds(1500 - 10 * 10 - 20 * 20 - 15 * 10));
+    // Check if the result of the order has been processed for the seller
+    EXPECT_EQ(app.getTraderManager()->getTraders()[1]->getPortfolio()->hasStock(Stock(Name("Apple"), Symbol("APPL")), Quantity(45)), false);
+    EXPECT_EQ(app.getTraderManager()->getTraders()[1]->getPortfolio()->hasStock(Stock(Name("Apple"), Symbol("APPL")), Quantity(30)), true);
+    EXPECT_EQ(app.getTraderManager()->getTraders()[1]->getFunds(), Funds(1000 + 10 * 10 + 15 * 10));
 
+    // Check if the remaining 15 stocks of Apple are still in the order book since Edi had only 15 out of 30 stocks that Alexco wanted
+    EXPECT_EQ(app.getStockMarket()->getOrderBook(Stock(Name("Apple"), Symbol("APPL")))->getBuyOrders().size(), 1);
+    EXPECT_EQ(app.getStockMarket()->getOrderBook(Stock(Name("Apple"), Symbol("APPL")))->getBuyOrders()[0].getQuantity(), Quantity(15));
+    EXPECT_EQ(app.getStockMarket()->getOrderBook(Stock(Name("Apple"), Symbol("APPL")))->getBuyOrders()[0].getPrice(), Price(10));
+
+    // Alexco wants to deposit some funds
+    app.getTraderManager()->getTraders()[0]->depositFunds(Funds(1000));
+    EXPECT_EQ(app.getTraderManager()->getTraders()[0]->getFunds(), Funds(1500 - 10 * 10 - 20 * 20 - 15 * 10 + 1000));
+
+    // Alexco wants to sell some stocks of AMD (10 stocks at 10000)
+    app.getStockMarket()->placeSellOrder(Order(
+        app.getTraderManager()->getTraders()[0],
+        Stock(Name("AMD"), Symbol("AMD")),
+        Quantity(10),
+        Price(10000)
+    ));
+
+    // Check if the sell order is correctly placed
+    EXPECT_EQ(app.getStockMarket()->getOrderBook(Stock(Name("AMD"), Symbol("AMD")))->getSellOrders().size(), 1);
+    EXPECT_EQ(app.getStockMarket()->getOrderBook(Stock(Name("AMD"), Symbol("AMD")))->getSellOrders()[0].getQuantity(), Quantity(10));
+    EXPECT_EQ(app.getStockMarket()->getOrderBook(Stock(Name("AMD"), Symbol("AMD")))->getSellOrders()[0].getPrice(), Price(10000));
+
+    // Now Alexco has done everything he wanted on the app for the moment so he leaves the app
 
 
 }

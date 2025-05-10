@@ -86,7 +86,7 @@ protected:
 
 };
 
-// End2EndTest for the app which simulates a real environment in which a user Alexco wants to use the app (this counts as blackbox testing, other test
+// End2EndTest for the app which simulates a real environment in which a user Alexco wants to use the app (this counts as blackbox testing, other tests are whitebox testing)
 TEST_F(AppTest, End2EndTest) {
 
     // Test the setup of the app

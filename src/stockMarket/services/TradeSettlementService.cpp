@@ -6,7 +6,7 @@
 
 void TradeSettlementService::applyTrades(const std::vector<Trade> &trades) {
     for (const Trade& trade : trades) {
-        if (!settleTrade(trade)) {
+        if (settleTrade(trade) == false) {
             throw std::runtime_error("Trade settlement failed");
         }
     }
@@ -24,8 +24,8 @@ bool TradeSettlementService::settleTrade(const Trade &trade) {
     auto buyerPortfolio = buyer->getPortfolio();
     auto sellerPortfolio = seller->getPortfolio();
 
-    if (!sellerPortfolio->hasStock(stock, quantity)) return false;
-    if (!buyerPortfolio->hasFunds(tradeFunds)) return false;
+    if (sellerPortfolio->hasStock(stock, quantity) == false) return false;
+    if (buyerPortfolio->hasFunds(tradeFunds) == false) return false;
 
     buyer->withdrawFunds(tradeFunds);
     seller->depositFunds(tradeFunds);

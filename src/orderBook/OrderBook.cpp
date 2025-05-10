@@ -5,7 +5,7 @@
 #include "OrderBook.h"
 
 void OrderBook::assertOrderStockSameAsOrderBookStock(const Order& order) const {
-    if (order.getStock() != stock) {
+    if (order.getStock()!=stock) {
         throw std::invalid_argument("Order does not belong in this OrderBook - different stock");
     }
 }
@@ -19,7 +19,7 @@ bool OrderBook::buyOrdersExist() const {
 }
 
 Order OrderBook::bestSellOrder() const {
-    if (sellOrders.empty()) {
+    if (sellOrders.empty() == true) {
         throw std::out_of_range("There is no buy order");
     }
 
@@ -27,7 +27,7 @@ Order OrderBook::bestSellOrder() const {
 }
 
 Order OrderBook::bestBuyOrder() const {
-    if (buyOrders.empty()) {
+    if (buyOrders.empty() == true) {
         throw std::out_of_range("There is no buy order");
     }
 
@@ -49,9 +49,9 @@ void OrderBook::removeBestBuyOrder() {
 std::vector<Trade> OrderBook::matchOrders() {
     std::vector <Trade> trades;
     while (
-        sellOrdersExist()
-        && buyOrdersExist()
-        && orderMatchExists()
+        sellOrdersExist() == true
+        && buyOrdersExist() == true
+        && orderMatchExists() == true
     ) {
         Order sellOrder = bestSellOrder();
         Order buyOrder = bestBuyOrder();
@@ -99,7 +99,7 @@ std::vector<Trade> OrderBook::addSellOrder(const Order& order) {
 std::vector<Order> OrderBook::getBuyOrders() const {
     std::priority_queue<Order, std::vector<Order>, BuyOrderComparator> tempQueue = buyOrders;
     std::vector<Order> result;
-    while (!tempQueue.empty()) {
+    while (tempQueue.empty() == false) {
         result.push_back(tempQueue.top());
         tempQueue.pop();
     }
@@ -109,7 +109,7 @@ std::vector<Order> OrderBook::getBuyOrders() const {
 std::vector<Order> OrderBook::getSellOrders() const {
     std::priority_queue<Order, std::vector<Order>, SellOrderComparator> tempQueue = sellOrders;
     std::vector<Order> result;
-    while (!tempQueue.empty()) {
+    while (tempQueue.empty() == false) {
         result.push_back(tempQueue.top());
         tempQueue.pop();
     }

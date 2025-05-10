@@ -10,6 +10,7 @@
 std::vector<Trade> StockMarket::placeBuyOrder(const Order &order) const {
     StockMarketValidator::assertPortfolioForTraderIdExists(*this, order.getTrader()->getId());
     StockMarketValidator::assertOrderBookForStockExists(*this, order.getStock());
+    order.assertTraderHasSufficientFunds();
 
     auto trades = this->orderBooks.at(order.getStock().getSymbol())->addBuyOrder(order);
     TradeSettlementService::applyTrades(trades);

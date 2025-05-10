@@ -19,9 +19,7 @@ Order::Order(
 trader(trader),
 stock(stock),
 quantity(quantity),
-price(price) {
-    assertTraderHasSufficientFunds();
-}
+price(price) {}
 
 Order::Order(const Order* other):
 trader(other->trader),
@@ -30,7 +28,7 @@ quantity(other->quantity),
 price(other->price) {}
 
 Order & Order::operator=(const Order &other) {
-    if (this == &other) {
+    if (this==&other) {
         return *this;
     }
     trader = other.trader;
@@ -42,7 +40,7 @@ Order & Order::operator=(const Order &other) {
 
 bool Order::operator==(const Order &other) const {
     return trader == other.trader
-    && stock == other.stock
+    && stock==other.stock
     && quantity == other.quantity
     && price == other.price;
 }

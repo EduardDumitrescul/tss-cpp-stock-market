@@ -20,7 +20,7 @@ price(price) {}
 bool Trade::operator==(const Trade &other) const {
     return buyer == other.buyer
     && seller == other.seller
-    && stock == other.stock
+    && stock==other.stock
     && quantity == other.quantity
     && price == other.price;
 }

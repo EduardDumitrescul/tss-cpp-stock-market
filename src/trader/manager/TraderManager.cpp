@@ -5,7 +5,7 @@
 #include "TraderManager.h"
 
 std::shared_ptr<const Trader> TraderManager::insert(Name name) {
-    if (traderWithNameExists(name)) {
+    if (traderWithNameExists(name) == true) {
         throw std::invalid_argument("Trader with name " + name.toString() + " already exists");
     }
     auto trader = std::make_shared<Trader>(name);
@@ -15,7 +15,7 @@ std::shared_ptr<const Trader> TraderManager::insert(Name name) {
 
 bool TraderManager::traderWithNameExists(const Name& name) const {
     for (const auto& [id, trader]: traders) {
-        if (trader->getName() == name) {
+        if (trader->getName()==name) {
             return true;
         }
     }

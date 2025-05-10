@@ -1,5 +1,5 @@
 //
-// Created by alexco on 08.05.2025.
+// Created by Alexco on 08.05.2025.
 //
 
 #include <gtest/gtest.h>

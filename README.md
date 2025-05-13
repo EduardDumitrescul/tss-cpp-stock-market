@@ -1,6 +1,12 @@
 # C++ Stock Market
 > Proiect Testarea Sistemelor Software
 
+
+## Demo
+<video width="320" height="240" controls>
+  <source src="docs/demo-tss.webm" type="video/webm">
+</video>
+
 ## Echipă
 **Cod Echipă**: A18
 
@@ -134,3 +140,180 @@ Având în vedere studiile de caz analizate, evaluările comparative și bunele 
 - https://www.theknowledgeacademy.com/blog/software-testing-case-studies/
 - https://duplextech.com/blogs/case-studies-successful-software-testing-projects.html
 - https://core.ac.uk/download/pdf/16333079.pdf
+
+---
+# Arhitectura finala
+![Architectura Sistemului](docs/out/architecture/StockMarketArchitecture.png)
+
+### Principiile Programării Orientate pe Obiect aplicate
+
+Pentru a facilita **dezvoltarea** și **mentenanța** aplicației, am respectat 
+principiile fundamentale ale programării orientate pe obiect:
+
+- **Encapsularea**
+
+Fiecare clasă are responsabilități bine definite și își ascunde detaliile 
+interne față de celelalte componente. Aceasta reduce dependențele și crește claritatea codului.
+
+**Exemplu:**
+Clasa `Trader` gestionează propriul `TraderId`, `Name` și `Portfolio`. Accesul la 
+aceste date se face prin metode dedicate, fără a expune direct atributele interne.
+
+- **Abstractizarea**
+
+Am separat **ce face** o clasă de **cum face**. Clasele oferă o interfață publică 
+clară, ascunzând complexitatea implementării.
+
+**Exemplu:**
+Interfața `ITraderManager` definește funcționalitățile managerului de traderi, fără 
+a depinde de o implementare concretă. Acest lucru permite extinderea sau modificarea
+comportamentului fără a afecta codul dependent.
+
+- **Moștenirea**
+
+Am utilizat moștenirea pentru a extinde funcționalitatea unor clase și a promova 
+reutilizarea codului.
+
+**Exemplu:**
+Clasa `TraderManager` implementează interfața `ITraderManager`, moștenind contractul
+funcțional pe care trebuie să-l respecte.
+
+- **Polimorfismul**
+
+Aplicația poate trata obiecte de tipuri diferite într-un mod unitar, prin intermediul 
+interfețelor sau claselor de bază.
+
+**Exemplu:**
+Prin utilizarea interfeței `ITraderManager`, componentele aplicației pot interacționa 
+cu orice implementare a acesteia, fără să cunoască detalii concrete despre instanțele 
+folosite.
+
+---
+
+
+# Testarea Implementarii
+Pentru a asigura functionarea conforma a platformei, am utilizat o 
+abordare in 3 pasi:
+- scrierea unor teste ce acopera cat mai bine functionalitatea pe care 
+o dorim
+- implementearea noii functionalitati
+- executarea testelor si ajustarea implementarii in cazul in care
+exista teste esuate (acest pas se repeta pana cand toate testele trec)
+
+## Strategii de Testare
+### Testare unitara
+Am utilizat teste unitare pentru a verifica constrangerile pe care le-am impus
+(business logic). Spre exemplu, Un utilizator nu poate avea mai mult de un miliard 
+fonduri.
+
+`src/types/funds/funds_test.cc`
+```cpp
+TEST(FundsTest, FundsAreAtMostABillion) {
+        EXPECT_NO_THROW({
+        Funds funds(1e9);
+    });
+
+    EXPECT_THROW({
+        Funds funds(1e9+1);
+    },
+    std::invalid_argument);
+
+    EXPECT_THROW({
+        Funds funds(1e10);
+    },
+    std::invalid_argument
+    );
+}
+```
+In acest caz, am utilizat analiza valorilor de frontiera pentru a determina 
+valorile testate:
+- 1,000,000,000 (respecta constrangerile)
+- 1,000,000,001 (nu respecta constragerile, arcunca o exceptie)
+
+De asemenea, am scris teste unitare si pentru a testa functionalitati diverse. 
+Spre exemplu, adugarea de fonduri unui actionar (trader):
+`src/trader/trader_test.cc`
+```cpp
+TEST_F(TraderTest, DepositFunds) {
+    Funds initialFunds = trader.getFunds();
+    Funds expectedInitialFunds = Funds(0);
+    EXPECT_EQ(initialFunds, expectedInitialFunds);
+
+
+    trader.depositFunds(funds100);
+    Funds currentFunds = trader.getFunds();
+    Funds expectedCurrentFunds = funds100;
+    EXPECT_EQ(currentFunds, expectedCurrentFunds);
+}
+```
+
+### Testrarea Integrarii
+Am utilizat **teste whitebox** pentru a verifica functionalitati mai complexe
+(in care multiple clase interactioneaza). Un exemplu este testul pentru plasarea
+ordinelor in clasa StockMarket in cadrul caruia am verificat ca 
+tranzactiile de actiuni sunt efectuate corespunator si portofoliile si fondurile
+actionarilor actualizate.
+
+
+`src/stcokMarket/stock_market_test.cc`
+```cpp
+TEST_F(StockMarketInitializationTest, PlaceOrders) {
+    market->registerStock(stock);
+    market->registerTrader(trader);
+    market->registerTrader(trader2);
+    portfolio2->addStock(stock, sellQuantity);
+
+    auto initialFundsBuyer = portfolio->getFunds();
+    auto initialFundsSeller = portfolio->getFunds();
+
+    Order order(trader, stock, buyQuantity, buyPrice);
+    Order order2(trader2, stock, sellQuantity, sellPrice);
+
+    auto trades = market->placeBuyOrder(order);
+    EXPECT_TRUE(trades.empty());
+
+    // verify trade details
+    auto trades2 = market->placeSellOrder(order2);
+    auto tradeQuantity = std::min(sellQuantity, buyQuantity);
+    EXPECT_EQ(trades2.size(), 1);
+    EXPECT_EQ(trades2[0].getQuantity(), tradeQuantity);
+    EXPECT_EQ(trades2[0].getPrice(), sellPrice);
+
+    auto tradeFunds = trades2[0].getTotalFunds();
+    // verify portfolio changes
+    EXPECT_EQ(portfolio->getFunds(), initialFundsBuyer - tradeFunds);
+    EXPECT_EQ(portfolio2->getFunds(), initialFundsSeller + tradeFunds);
+
+    // verify buyer now has stock holdings
+    EXPECT_EQ(portfolio->getStockQuantity(stock), buyQuantity);
+    EXPECT_EQ(portfolio2->getStockQuantity(stock), sellQuantity - buyQuantity);
+}
+```
+
+### Testare End-to-End
+In fisierul 'src/app/app_test.cc' am inclus un test care verifica un intreg flux ce contine
+functionalitatile principale pe care le foloseste un utilizator al platformei:
+- adaugare fonduri
+- adaugare ordin de tip sell
+- adaugare ordin de tip buy
+
+
+### Generarea mutantilor
+Cu ajutorul script-ului `mutants/main_mutants.cpp`, putem genera mutanti ai programului.
+Un exemplu de rulare, in care a fost modificata conditia unui _if_:
+![img_1.png](img_1.png)
+Cand rulam toate testele observam ca avem 4 care esueaza:
+![img_2.png](img_2.png)
+
+## Analiza
+Cu ajutorul tool-ului de Coverage inclus in CLion, am obtinut:
+- 97% code overage
+- 97% line coverage
+- 49% branch coverage
+![img.png](img.png)
+
+# Raport AI
+Pe parcursul acestui proiect, am folosit urmatoarele unelte de Inteligenta Artificiala:
+- ChatGPT:
+  - verificarea exprimarii in documentatie si adaugarea diacriticelor
+  - verificarea diagramei arhitecturii

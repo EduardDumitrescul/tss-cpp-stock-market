@@ -42,6 +42,21 @@ public:
         return updatedFunds;
     }
 
+    Funds operator*(const Funds & funds) const
+    {
+        const Funds updatedFunds(amount * funds.amount);
+        return updatedFunds;
+    }
+
+    Funds operator/(const Funds & funds) const
+    {
+        if (funds.amount == 0) {
+            throw std::invalid_argument("Division by zero");
+        }
+        const Funds updatedFunds(amount / funds.amount);
+        return updatedFunds;
+    }
+
     long long getValue() const {
         return amount;
     }

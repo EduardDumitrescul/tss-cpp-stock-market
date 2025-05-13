@@ -48,6 +48,17 @@ public:
         return Quantity(this->quantity + quantity.quantity);
     }
 
+    Quantity operator*(const Quantity & quantity) const {
+        return Quantity(this->quantity * quantity.quantity);
+    }
+
+    Quantity operator/(const Quantity & quantity) const {
+        if (quantity.quantity == 0) {
+            throw std::invalid_argument("Division by zero");
+        }
+        return Quantity(this->quantity / quantity.quantity);
+    }
+
     Quantity& operator+=(const Quantity & quantity) {
         this->quantity += quantity.quantity;
         return *this;

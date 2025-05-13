@@ -16,6 +16,7 @@ set(IMPL_SOURCES
         src/trader/traderId/TraderId.cpp
         src/stockMarket/validators/StockMarketValidator.cpp
         src/stockMarket/services/TradeSettlementService.cpp
+        src/app/App.cpp
 )
 
 # Test sources
@@ -32,7 +33,7 @@ set(TEST_SOURCES
         src/order/order_test.cc
         src/trader/traderId/trader_id_test.cc
         src/stockMarket/stock_market_test.cc
-        src/stockMarket/services/TradeSettlementService.h
+        src/app/app_test.cc
 )
 
 # GoogleTest

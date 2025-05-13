@@ -18,9 +18,10 @@ class Order {
     Quantity quantity;
     Price price;
 
+public:
+
     void assertTraderHasSufficientFunds() const;
 
-public:
     Order(
         const std::shared_ptr<const Trader> &trader,
         const Stock& stock,

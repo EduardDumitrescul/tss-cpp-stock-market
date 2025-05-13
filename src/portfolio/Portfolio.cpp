@@ -21,14 +21,14 @@ void Portfolio::withdrawFunds(const Funds funds) {
 }
 
 void Portfolio::addStock(const Stock& stock, const Quantity quantity) {
-    stocks[stock.getSymbol()] += quantity;
+    stocks[stock.getSymbol()] = stocks[stock.getSymbol()] + quantity;
 }
 
 void Portfolio::removeStock(const Stock& stock, const Quantity quantity) {
     if (stocks.at(stock.getSymbol()) < quantity) {
         throw std::runtime_error("You don't have enough stocks.");
     }
-    stocks[stock.getSymbol()] -= quantity;
+    stocks[stock.getSymbol()] = stocks[stock.getSymbol()] - quantity;
 }
 
 bool Portfolio::hasFunds(const Funds &funds) const {
@@ -36,7 +36,7 @@ bool Portfolio::hasFunds(const Funds &funds) const {
 }
 
 bool Portfolio::hasStock(const Stock &stock, Quantity quantity) const {
-    if (!stocks.contains(stock.getSymbol()))
+    if (stocks.contains(stock.getSymbol()) == false)
         return false;
     if (stocks.at(stock.getSymbol()) < quantity)
         return false;

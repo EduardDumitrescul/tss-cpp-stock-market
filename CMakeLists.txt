@@ -33,7 +33,6 @@ set(TEST_SOURCES
         src/order/order_test.cc
         src/trader/traderId/trader_id_test.cc
         src/stockMarket/stock_market_test.cc
-        src/stockMarket/services/TradeSettlementService.h
         src/app/app_test.cc
 )
 

@@ -86,9 +86,8 @@ protected:
 
 };
 
-// End2EndTest for the app which simulates a real environment in which a user Alexco wants to use the app (this counts as blackbox testing, other tests are whitebox testing)
+// End2EndTest for the app which simulates a real environment in which a user Alexco wants to use the app
 TEST_F(AppTest, End2EndTest) {
-
     // Test the setup of the app
 
     // Check if the traders are correctly initialized

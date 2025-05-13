@@ -3,9 +3,8 @@
 
 
 ## Demo
-<video width="320" height="240" controls>
-  <source src="docs/demo-tss.webm" type="video/webm">
-</video>
+
+[Youtube](https://youtu.be/MpYYQ9btR6o)
 
 ## Echipă
 **Cod Echipă**: A18
@@ -301,8 +300,11 @@ functionalitatile principale pe care le foloseste un utilizator al platformei:
 ### Generarea mutantilor
 Cu ajutorul script-ului `mutants/main_mutants.cpp`, putem genera mutanti ai programului.
 Un exemplu de rulare, in care a fost modificata conditia unui _if_:
+
 ![img_1.png](img_1.png)
+
 Cand rulam toate testele observam ca avem 4 care esueaza:
+
 ![img_2.png](img_2.png)
 
 ## Analiza
@@ -310,10 +312,221 @@ Cu ajutorul tool-ului de Coverage inclus in CLion, am obtinut:
 - 97% code overage
 - 97% line coverage
 - 49% branch coverage
+- 
 ![img.png](img.png)
 
 # Raport AI
 Pe parcursul acestui proiect, am folosit urmatoarele unelte de Inteligenta Artificiala:
-- ChatGPT:
-  - verificarea exprimarii in documentatie si adaugarea diacriticelor
-  - verificarea diagramei arhitecturii
+## ChatGPT:
+#### Verificarea exprimarii in documentatie si adaugarea diacriticelor
+#### Verificarea diagramei arhitecturii
+Prompt:
+```
+verify this
+@startuml StockMarketArchitecture
+!pragma layout smetana
+
+
+class App 
+
+class StockMarket
+
+class TraderManager
+interface ITraderManager
+
+class OrderBook
+class Portfolio {
+    std::unordered_map<Symbol, Quantity> stocks
+}
+class StockMarketValidator
+
+class Trader
+
+class Stock
+class Order
+class Symbol
+class TraderId
+class Quantity
+class Price
+
+class Trade
+
+
+App --> StockMarket
+App --> TraderManager
+
+StockMarket "1" --> "*" OrderBook
+StockMarket "1" --> "*" Portfolio
+StockMarket --> StockMarketValidator
+
+TraderManager <|-- ITraderManager
+TraderManager "1" --> "*" Trader
+
+OrderBook *-- Stock: follows
+OrderBook "1" --> "*" Order
+
+Portfolio *-- Funds
+
+Portfolio "1" --> "*" Symbol : key
+Portfolio "1" --> "*" Quantity : value
+
+Trader *-- TraderId
+Trader *-- Name
+Trader --> Portfolio: "owns"
+
+Order *-- Trader
+Order *-- Stock
+Order *-- Quantity
+Order *-- Price
+
+Trade *-- Trader: buyer
+Trade *-- Trader: seller
+Trade *-- Stock
+Trade *-- Quantity
+Trade *-- Price
+
+
+@enduml
+```
+
+Response:
+```
+Your PlantUML diagram mostly looks good, but there are a few **issues and suggestions** to improve correctness and clarity:
+
+---
+
+### ✅ **Correct Parts**
+
+* Most class declarations and relationships are syntactically fine.
+* Good use of cardinalities and member annotations (e.g., the `Symbol : key` and `Quantity : value` relationships).
+* Reasonable use of interfaces and inheritance.
+
+---
+
+### ⚠️ **Issues to Address**
+
+1. **Missing Class: `Funds`**
+
+   * You reference `Funds` in this line:
+
+     ```plantuml
+     Portfolio *-- Funds
+     ```
+
+     But `Funds` is not declared anywhere in the diagram. Add:
+
+     ```plantuml
+     class Funds
+     ```
+
+2. **Missing Class: `Name`**
+
+   * You reference `Name` here:
+
+     ```plantuml
+     Trader *-- Name
+     ```
+
+     But `Name` is not declared. Add:
+
+     ```plantuml
+     class Name
+     ```
+
+3. **Confusion Around Map Representation**
+
+   * This part:
+
+     ```plantuml
+     Portfolio "1" --> "*" Symbol : key
+     Portfolio "1" --> "*" Quantity : value
+     ```
+
+     is a bit misleading. A `std::unordered_map<Symbol, Quantity>` means **each `Symbol` is associated with a single `Quantity`**, not many. The relationship is from `Symbol` → `Quantity`, not `Portfolio` → many of both. Better to model it as:
+
+     ```plantuml
+     Portfolio --> "many" StockEntry
+     class StockEntry {
+         Symbol
+         Quantity
+     }
+     ```
+
+     Or just document it more abstractly, as you've done, if simplicity is the goal.
+
+---
+
+### ✅ **Updated and Verified Version**
+
+Here’s the corrected and verified PlantUML code:
+
+```plantuml
+@startuml StockMarketArchitecture
+!pragma layout smetana
+
+class App 
+
+class StockMarket
+
+class TraderManager
+interface ITraderManager
+
+class OrderBook
+class Portfolio {
+    std::unordered_map<Symbol, Quantity> stocks
+}
+class StockMarketValidator
+
+class Trader
+
+class Stock
+class Order
+class Symbol
+class TraderId
+class Quantity
+class Price
+
+class Trade
+class Funds
+class Name
+
+App --> StockMarket
+App --> TraderManager
+
+StockMarket "1" --> "*" OrderBook
+StockMarket "1" --> "*" Portfolio
+StockMarket --> StockMarketValidator
+
+TraderManager <|-- ITraderManager
+TraderManager "1" --> "*" Trader
+
+OrderBook *-- Stock : follows
+OrderBook "1" --> "*" Order
+
+Portfolio *-- Funds
+
+Portfolio "1" --> "*" Symbol : key
+Portfolio "1" --> "*" Quantity : value
+
+Trader *-- TraderId
+Trader *-- Name
+Trader --> Portfolio : owns
+
+Order *-- Trader
+Order *-- Stock
+Order *-- Quantity
+Order *-- Price
+
+Trade *-- Trader : buyer
+Trade *-- Trader : seller
+Trade *-- Stock
+Trade *-- Quantity
+Trade *-- Price
+
+@enduml
+
+---
+
+Let me know if you'd like to refactor it for clarity or split complex relationships like the map into composite classes.
+
+```

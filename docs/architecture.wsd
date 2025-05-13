@@ -1,0 +1,70 @@
+@startuml StockMarketArchitecture
+!pragma layout smetana
+
+
+class App 
+
+class StockMarket
+
+class TraderManager
+interface ITraderManager
+
+class OrderBook
+class Portfolio
+class StockMarketValidator
+
+class Trader
+
+class Stock
+class Order
+class Symbol
+class TraderId
+class Quantity
+class Price
+
+class Trade
+class Funds
+class Name
+
+
+App --> StockMarket
+App --> TraderManager
+
+StockMarket "1" --> "*" OrderBook
+StockMarket "1" --> "*" Portfolio
+StockMarket --> StockMarketValidator
+
+TraderManager <|-- ITraderManager
+TraderManager "1" --> "*" Trader
+
+OrderBook *-- Stock: follows
+OrderBook "1" --> "*" Order
+
+Portfolio *-- Funds
+
+Portfolio --> "many" StockEntry
+class StockEntry {
+    Symbol
+    Quantity
+}
+
+Trader *-- TraderId
+Trader *-- Name
+Trader --> Portfolio: "owns"
+
+Order *-- Trader
+Order *-- Stock
+Order *-- Quantity
+Order *-- Price
+
+Trade *-- Trader: buyer
+Trade *-- Trader: seller
+Trade *-- Stock
+Trade *-- Quantity
+Trade *-- Price
+
+Stock *-- Name
+Stock *-- Symbol
+
+
+@enduml

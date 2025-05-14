@@ -187,6 +187,27 @@ Prin utilizarea interfeței `ITraderManager`, componentele aplicației pot inter
 cu orice implementare a acesteia, fără să cunoască detalii concrete despre instanțele 
 folosite.
 
+**Principiile SOLID:**
+- **Single Responsability Principle**
+  
+Fiecare clasă are un singur motiv pentru a fi schimbată.
+  
+- **Open/Closed Principle**
+  
+Toate clasele sunt deschise la extindere, dar închise la modificare.
+
+- **Liskov Substitution Principle**
+  
+Obiectele de tipul superclasei pot fi schimbate cu obiecte de tip subclase.
+  
+- **Interface Segregation Principle**
+  
+Clasele nu folosesc interfețe pe care nu le utilizează.
+  
+- **Dependency Injection Principle**
+  
+Modulele high-level nu depind de module low-level.
+
 ---
 
 
@@ -246,7 +267,7 @@ TEST_F(TraderTest, DepositFunds) {
 }
 ```
 
-### Testrarea Integrarii
+### Testarea Integrarii
 Am utilizat **teste whitebox** pentru a verifica functionalitati mai complexe
 (in care multiple clase interactioneaza). Un exemplu este testul pentru plasarea
 ordinelor in clasa StockMarket in cadrul caruia am verificat ca 
@@ -254,7 +275,7 @@ tranzactiile de actiuni sunt efectuate corespunator si portofoliile si fondurile
 actionarilor actualizate.
 
 
-`src/stcokMarket/stock_market_test.cc`
+`src/stockMarket/stock_market_test.cc`
 ```cpp
 TEST_F(StockMarketInitializationTest, PlaceOrders) {
     market->registerStock(stock);
@@ -312,7 +333,7 @@ Cu ajutorul tool-ului de Coverage inclus in CLion, am obtinut:
 - 97% code overage
 - 97% line coverage
 - 49% branch coverage
-- 
+
 ![img.png](img.png)
 
 # Raport AI
